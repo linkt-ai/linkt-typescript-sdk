@@ -153,6 +153,11 @@ export interface IngestTaskConfig {
   config_type?: 'ingest-task';
 
   version?: 'v1.0';
+
+  /**
+   * Optional webhook URL to notify when workflow run completes
+   */
+  webhook_url?: string | null;
 }
 
 /**
@@ -175,6 +180,11 @@ export interface SearchV2Config {
   config_type?: 'search-prompt' | 'search-task';
 
   version?: 'v2.0';
+
+  /**
+   * Optional webhook URL to notify when workflow run completes
+   */
+  webhook_url?: string | null;
 }
 
 /**
@@ -203,12 +213,25 @@ export interface SearchV3Config {
   user_feedback?: string;
 
   version?: 'v3.0';
+
+  /**
+   * Optional webhook URL to notify when workflow run completes
+   */
+  webhook_url?: string | null;
 }
 
 /**
  * CSV-based signal monitoring configuration.
  *
  * Monitors signals for companies/people uploaded via CSV file.
+ *
+ * Attributes: version: Config version (always "v2.0") config_type: Config type
+ * discriminator (always "signal-csv") entity_type: Type of entity being monitored
+ * (company, person, etc.) file_id: ID of the uploaded CSV file primary_column:
+ * Column containing entity names (defaults to "name") signal_types: Types of
+ * signals to monitor for these entities monitoring_frequency: How often to check
+ * for signals (daily/weekly/monthly) webhook_url: Optional webhook URL to notify
+ * when signal run completes
  */
 export interface SignalCsvConfigInput {
   /**
@@ -246,6 +269,11 @@ export interface SignalCsvConfigInput {
    * Config version
    */
   version?: 'v2.0';
+
+  /**
+   * Optional webhook URL to notify when signal run completes
+   */
+  webhook_url?: string | null;
 }
 
 /**
@@ -263,6 +291,7 @@ export interface SignalCsvConfigInput {
  * monitor entity_type: Type of entity being monitored (selects which sheet)
  * entity_filters: Optional MongoDB query to filter entities signal_types: Types of
  * signals to monitor monitoring_frequency: How often to check for signals
+ * webhook_url: Optional webhook URL to notify when signal run completes
  */
 export interface SignalSheetConfigInput {
   /**
@@ -299,12 +328,26 @@ export interface SignalSheetConfigInput {
    * Config version
    */
   version?: 'v2.0';
+
+  /**
+   * Optional webhook URL to notify when signal run completes
+   */
+  webhook_url?: string | null;
 }
 
 /**
  * Topic-based signal monitoring configuration.
  *
  * Monitors signals based on criteria without requiring pre-existing entities.
+ *
+ * Attributes: version: Config version (always "v2.0") config_type: Config type
+ * discriminator (always "signal-topic") entity_type: Type of entity being
+ * monitored (company, person, etc.) topic_criteria: Natural language description
+ * of what to monitor signal_types: Types of signals to monitor for this topic
+ * monitoring_frequency: How often to check for signals (daily/weekly/monthly)
+ * geographic_filters: Optional geographic regions to focus on industry_filters:
+ * Optional industries to focus on company_size_filters: Optional company size
+ * criteria webhook_url: Optional webhook URL to notify when signal run completes
  */
 export interface SignalTopicConfigInput {
   /**
@@ -351,6 +394,11 @@ export interface SignalTopicConfigInput {
    * Config version
    */
   version?: 'v2.0';
+
+  /**
+   * Optional webhook URL to notify when signal run completes
+   */
+  webhook_url?: string | null;
 }
 
 /**
@@ -411,6 +459,11 @@ export interface StandardPromptConfig {
   prompt: string;
 
   version?: 'v1.0';
+
+  /**
+   * Optional webhook URL to notify when workflow run completes
+   */
+  webhook_url?: string | null;
 }
 
 export type TaskCreateResponse = { [key: string]: unknown };
@@ -512,6 +565,15 @@ export namespace TaskListResponse {
      * Topic-based signal monitoring configuration.
      *
      * Monitors signals based on criteria without requiring pre-existing entities.
+     *
+     * Attributes: version: Config version (always "v2.0") config_type: Config type
+     * discriminator (always "signal-topic") entity_type: Type of entity being
+     * monitored (company, person, etc.) topic_criteria: Natural language description
+     * of what to monitor signal_types: Types of signals to monitor for this topic
+     * monitoring_frequency: How often to check for signals (daily/weekly/monthly)
+     * geographic_filters: Optional geographic regions to focus on industry_filters:
+     * Optional industries to focus on company_size_filters: Optional company size
+     * criteria webhook_url: Optional webhook URL to notify when signal run completes
      */
     export interface SignalTopicConfigOutput {
       /**
@@ -558,12 +620,25 @@ export namespace TaskListResponse {
        * Config version
        */
       version?: 'v2.0';
+
+      /**
+       * Optional webhook URL to notify when signal run completes
+       */
+      webhook_url?: string | null;
     }
 
     /**
      * CSV-based signal monitoring configuration.
      *
      * Monitors signals for companies/people uploaded via CSV file.
+     *
+     * Attributes: version: Config version (always "v2.0") config_type: Config type
+     * discriminator (always "signal-csv") entity_type: Type of entity being monitored
+     * (company, person, etc.) file_id: ID of the uploaded CSV file primary_column:
+     * Column containing entity names (defaults to "name") signal_types: Types of
+     * signals to monitor for these entities monitoring_frequency: How often to check
+     * for signals (daily/weekly/monthly) webhook_url: Optional webhook URL to notify
+     * when signal run completes
      */
     export interface SignalCsvConfigOutput {
       /**
@@ -601,6 +676,11 @@ export namespace TaskListResponse {
        * Config version
        */
       version?: 'v2.0';
+
+      /**
+       * Optional webhook URL to notify when signal run completes
+       */
+      webhook_url?: string | null;
     }
 
     /**
@@ -618,6 +698,7 @@ export namespace TaskListResponse {
      * monitor entity_type: Type of entity being monitored (selects which sheet)
      * entity_filters: Optional MongoDB query to filter entities signal_types: Types of
      * signals to monitor monitoring_frequency: How often to check for signals
+     * webhook_url: Optional webhook URL to notify when signal run completes
      */
     export interface SignalSheetConfigOutput {
       /**
@@ -654,6 +735,11 @@ export namespace TaskListResponse {
        * Config version
        */
       version?: 'v2.0';
+
+      /**
+       * Optional webhook URL to notify when signal run completes
+       */
+      webhook_url?: string | null;
     }
   }
 }
