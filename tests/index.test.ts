@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'linkt/core/api-promise';
+import { APIPromise } from '@linkt/sdk/core/api-promise';
 
 import util from 'node:util';
-import Linkt from 'linkt';
-import { APIUserAbortError } from 'linkt';
+import Linkt from '@linkt/sdk';
+import { APIUserAbortError } from '@linkt/sdk';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

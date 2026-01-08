@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Linkt } from 'linkt';
+import { Linkt } from '@linkt/sdk';
 
 const { stringifyQuery } = Linkt.prototype as any;
 

@@ -55,12 +55,12 @@ $ cd linkt-typescript-sdk
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link linkt
+$ yarn link @linkt/sdk
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global linkt
+$ pnpm link -—global @linkt/sdk
 ```
 
 ## Running tests

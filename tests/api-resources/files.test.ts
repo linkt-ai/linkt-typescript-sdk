@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Linkt, { toFile } from 'linkt';
+import Linkt, { toFile } from '@linkt/sdk';
 
 const client = new Linkt({
   apiKey: 'My API Key',
