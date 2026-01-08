@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "linkt/*": ["./dist/src/*"],
-      "linkt": ["./dist/src/index.ts"]
+      "@linkt/sdk/*": ["./dist/src/*"],
+      "@linkt/sdk": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

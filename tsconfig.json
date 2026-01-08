@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "linkt/*": ["./src/*"],
-      "linkt": ["./src/index.ts"]
+      "@linkt/sdk/*": ["./src/*"],
+      "@linkt/sdk": ["./src/index.ts"]
     },
     "noEmit": true,
 

@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'linkt/internal/uploads';
-import { toFile } from 'linkt/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@linkt/sdk/internal/uploads';
+import { toFile } from '@linkt/sdk/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

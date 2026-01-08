@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0 (2026-01-08)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* setup publish to NPM ([dca6199](https://github.com/linkt-ai/linkt-typescript-sdk/commit/dca619940dc5e50ac8a85b54ca530106d158def9))
+* update package_name to @linkt/sdk ([785a756](https://github.com/linkt-ai/linkt-typescript-sdk/commit/785a756524ab747477c990005fc1d0a628dd36ef))
+
 ## 0.1.0 (2026-01-08)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.0.1...v0.1.0)
