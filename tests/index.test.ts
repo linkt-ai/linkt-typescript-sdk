@@ -322,20 +322,20 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['LINKT_BASE_URL'] = ''; // empty
       const client = new Linkt({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://api-staging.linkt.ai');
+      expect(client.baseURL).toEqual('https://api.linkt.ai');
     });
 
     test('blank env variable', () => {
       process.env['LINKT_BASE_URL'] = '  '; // blank
       const client = new Linkt({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://api-staging.linkt.ai');
+      expect(client.baseURL).toEqual('https://api.linkt.ai');
     });
 
     test('env variable with environment', () => {
       process.env['LINKT_BASE_URL'] = 'https://example.com/from_env';
 
       expect(
-        () => new Linkt({ apiKey: 'My API Key', environment: 'staging' }),
+        () => new Linkt({ apiKey: 'My API Key', environment: 'production' }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"Ambiguous URL; The \`baseURL\` option (or LINKT_BASE_URL env var) and the \`environment\` option are given. If you want to use the environment you must pass baseURL: null"`,
       );
@@ -343,9 +343,9 @@ describe('instantiate client', () => {
       const client = new Linkt({
         apiKey: 'My API Key',
         baseURL: null,
-        environment: 'staging',
+        environment: 'production',
       });
-      expect(client.baseURL).toEqual('https://api-staging.linkt.ai');
+      expect(client.baseURL).toEqual('https://api.linkt.ai');
     });
 
     test('in request options', () => {

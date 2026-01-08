@@ -93,8 +93,8 @@ import {
 import { isEmptyObj } from './internal/utils/values';
 
 const environments = {
-  staging: 'https://api-staging.linkt.ai',
   production: 'https://api.linkt.ai',
+  staging: 'https://api-staging.linkt.ai',
 };
 type Environment = keyof typeof environments;
 
@@ -108,8 +108,8 @@ export interface ClientOptions {
    * Specifies the environment to use for the API.
    *
    * Each environment maps to a different base URL:
-   * - `staging` corresponds to `https://api-staging.linkt.ai`
    * - `production` corresponds to `https://api.linkt.ai`
+   * - `staging` corresponds to `https://api-staging.linkt.ai`
    */
   environment?: Environment | undefined;
 
@@ -204,8 +204,8 @@ export class Linkt {
    * API Client for interfacing with the Linkt API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['LINKT_API_KEY'] ?? undefined]
-   * @param {Environment} [opts.environment=staging] - Specifies the environment URL to use for the API.
-   * @param {string} [opts.baseURL=process.env['LINKT_BASE_URL'] ?? https://api-staging.linkt.ai] - Override the default base URL for the API.
+   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
+   * @param {string} [opts.baseURL=process.env['LINKT_BASE_URL'] ?? https://api.linkt.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -228,7 +228,7 @@ export class Linkt {
       apiKey,
       ...opts,
       baseURL,
-      environment: opts.environment ?? 'staging',
+      environment: opts.environment ?? 'production',
     };
 
     if (baseURL && opts.environment) {
@@ -237,7 +237,7 @@ export class Linkt {
       );
     }
 
-    this.baseURL = options.baseURL || environments[options.environment || 'staging'];
+    this.baseURL = options.baseURL || environments[options.environment || 'production'];
     this.timeout = options.timeout ?? Linkt.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
@@ -281,7 +281,7 @@ export class Linkt {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== environments[this._options.environment || 'staging'];
+    return this.baseURL !== environments[this._options.environment || 'production'];
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
