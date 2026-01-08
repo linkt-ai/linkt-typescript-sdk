@@ -1,12 +1,12 @@
 {
   "name": "linkt",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The official TypeScript library for the Linkt API",
   "author": "Linkt <support@linkt.ai>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:stainless-sdks/linkt-typescript",
+  "repository": "github:linkt-ai/linkt-typescript-sdk",
   "license": "Apache-2.0",
   "packageManager": "pnpm@10.24.0",
   "files": [
