@@ -27,6 +27,7 @@ import Linkt from 'linkt';
 
 const client = new Linkt({
   apiKey: process.env['LINKT_API_KEY'], // This is the default and can be omitted
+  environment: 'production', // defaults to 'staging'
 });
 
 const icpResponse = await client.icp.create({
@@ -48,6 +49,7 @@ import Linkt from 'linkt';
 
 const client = new Linkt({
   apiKey: process.env['LINKT_API_KEY'], // This is the default and can be omitted
+  environment: 'production', // defaults to 'staging'
 });
 
 const params: Linkt.IcpCreateParams = {
