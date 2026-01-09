@@ -34,7 +34,12 @@ describe('resource task', () => {
       name: 'x',
       icp_id: '5eb7cf5a86d9755df3a6c593',
       prompt: 'prompt',
-      task_config: { foo: 'bar' },
+      task_config: {
+        desired_contact_count: 1,
+        type: 'search',
+        user_feedback: 'user_feedback',
+        webhook_url: 'webhook_url',
+      },
     });
   });
 

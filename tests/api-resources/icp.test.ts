@@ -32,7 +32,9 @@ describe('resource icp', () => {
         {
           description: 'description',
           entity_type: 'entity_type',
+          desired_count: 1,
           filters: ['string'],
+          root: true,
         },
       ],
       name: 'x',
