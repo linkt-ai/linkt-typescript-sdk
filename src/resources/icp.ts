@@ -74,6 +74,23 @@ export class Icp extends APIResource {
 
 /**
  * Request model for entity target configuration.
+ *
+ * Synchronized with core.schema.mongo.icp.EntityTargetConfig to ensure all fields
+ * available in the database model can be set via the API.
+ *
+ * Attributes: entity_type: The entity type to target (e.g., 'company', 'person').
+ * description: Business description of what makes a good target. root: If True,
+ * this is the root entity type of the search hierarchy. Only one entity target
+ * should be marked as root. Defaults to False for backward compatibility with
+ * existing API consumers. desired_count: For non-root entities, the desired number
+ * of entities per parent (minimum: 1). Uses `ge=1` Field constraint which
+ * generates `minimum: 1` in OpenAPI schema for SDK validation. If not specified,
+ * defaults to system minimum (typically 2). filters: Optional list of filter
+ * criteria to apply to the search.
+ *
+ * Note: The `root` and `desired_count` fields default to False and None
+ * respectively, making them optional in API requests for backward compatibility
+ * with existing integrations.
  */
 export interface EntityTargetConfig {
   /**
@@ -82,14 +99,26 @@ export interface EntityTargetConfig {
   description: string;
 
   /**
-   * Entity type to target
+   * Entity type to target (company, person, etc.)
    */
   entity_type: string;
+
+  /**
+   * For non-root entities, desired count per parent (minimum: 1). If not specified,
+   * defaults to system minimum.
+   */
+  desired_count?: number | null;
 
   /**
    * Filters to apply
    */
   filters?: Array<string>;
+
+  /**
+   * If this is the root entity type of the search. Only one entity target should be
+   * root.
+   */
+  root?: boolean;
 }
 
 /**
@@ -112,13 +141,40 @@ export interface IcpResponse {
 export namespace IcpResponse {
   /**
    * Response model for entity target configuration.
+   *
+   * Synchronized with core.schema.mongo.icp.EntityTargetConfig to return all
+   * configuration fields stored in the database to API consumers.
+   *
+   * Attributes: root: If True, this is the root entity type of the search hierarchy.
+   * entity_type: The entity type this config targets (e.g., 'company', 'person').
+   * description: Business description of what makes a good target. desired_count:
+   * For non-root entities, the desired number of entities per parent. Returns None
+   * if not explicitly set in the ICP.
+   *
+   * Note: The `desired_count` field is included in responses to enable API consumers
+   * to see the full configuration. When None, the system applies its default minimum
+   * (typically 2).
    */
   export interface EntityTarget {
+    /**
+     * Business description of targets
+     */
     description: string;
 
+    /**
+     * Entity type (company, person, etc.)
+     */
     entity_type: string;
 
+    /**
+     * If this is the root entity type
+     */
     root: boolean;
+
+    /**
+     * For non-root entities, desired count per parent
+     */
+    desired_count?: number | null;
   }
 }
 

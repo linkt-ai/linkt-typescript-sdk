@@ -126,9 +126,9 @@ export type RunRetrieveResponse = { [key: string]: unknown };
  * - SheetListResponse (src/api/schema/sheet.py)
  * - ICPListResponse (src/api/schema/icp.py)
  *
- * Attributes: runs: List of AgentRun objects for the current page total: Total
- * number of runs matching the filter criteria page: Current page number (1-based)
- * page_size: Number of items per page
+ * Attributes: runs: List of AgentRun objects for the current page (metadata
+ * excluded) total: Total number of runs matching the filter criteria page: Current
+ * page number (1-based) page_size: Number of items per page
  */
 export interface RunListResponse {
   page: number;
