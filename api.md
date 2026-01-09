@@ -68,11 +68,7 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/task.ts">IngestTaskConfig</a></code>
-- <code><a href="./src/resources/task.ts">SearchV2Config</a></code>
-- <code><a href="./src/resources/task.ts">SearchV3Config</a></code>
 - <code><a href="./src/resources/task.ts">SignalTypeConfig</a></code>
-- <code><a href="./src/resources/task.ts">StandardPromptConfig</a></code>
 - <code><a href="./src/resources/task.ts">TaskCreateResponse</a></code>
 - <code><a href="./src/resources/task.ts">TaskRetrieveResponse</a></code>
 - <code><a href="./src/resources/task.ts">TaskListResponse</a></code>
