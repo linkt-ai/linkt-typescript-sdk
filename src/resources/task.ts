@@ -121,6 +121,282 @@ export class Task extends APIResource {
 }
 
 /**
+ * CSV enrichment task configuration.
+ *
+ * Enriches entities from an uploaded CSV file with additional data discovered by
+ * AI agents.
+ *
+ * Attributes: type: Config type discriminator (always "ingest"). file_id: ID of
+ * the uploaded CSV file to process. primary_column: Column containing entity names
+ * for matching. csv_entity_type: Entity type in the CSV (e.g., 'person',
+ * 'company'). webhook_url: Optional webhook URL for completion notification.
+ *
+ * Example: >>> config = IngestTaskConfigRequest( ... file_id="abc123", ...
+ * primary_column="company_name", ... csv_entity_type="company" ... )
+ */
+export interface IngestTaskConfig {
+  /**
+   * Entity type in the CSV (e.g., 'person', 'company')
+   */
+  csv_entity_type: string;
+
+  /**
+   * ID of the uploaded CSV file to process
+   */
+  file_id: string;
+
+  /**
+   * Column containing entity names for matching
+   */
+  primary_column: string;
+
+  /**
+   * Config type discriminator
+   */
+  type?: 'ingest';
+
+  /**
+   * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
+ * Profile prompt task configuration.
+ *
+ * Configures a profile workflow with a custom prompt template.
+ *
+ * Attributes: type: Config type discriminator (always "profile"). prompt: Jinja2
+ * template for task instructions. webhook_url: Optional webhook URL for completion
+ * notification.
+ *
+ * Example: >>> config = ProfilePromptConfigRequest( ... prompt="Analyze
+ * {{ company_name }} and extract key metrics." ... )
+ */
+export interface ProfilePromptConfig {
+  /**
+   * Jinja2 template for task instructions
+   */
+  prompt: string;
+
+  /**
+   * Config type discriminator
+   */
+  type?: 'profile';
+
+  /**
+   * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
+ * Search task configuration for finding companies and contacts.
+ *
+ * Creates a v3.0 search workflow that uses AI agents to discover entities matching
+ * your ICP criteria.
+ *
+ * Attributes: type: Config type discriminator (always "search").
+ * desired_contact_count: Number of contacts to find per company (minimum: 1).
+ * user_feedback: Optional feedback to refine search behavior. webhook_url:
+ * Optional webhook URL for completion notification.
+ *
+ * Example: >>> config = SearchTaskConfigRequest(desired_contact_count=5) >>>
+ * mongo_config = config.to_mongo_config() >>> mongo_config.version 'v3.0'
+ */
+export interface SearchTaskConfig {
+  /**
+   * Number of contacts to find per company (minimum: 1)
+   */
+  desired_contact_count?: number;
+
+  /**
+   * Config type discriminator
+   */
+  type?: 'search';
+
+  /**
+   * Optional feedback to refine search behavior
+   */
+  user_feedback?: string;
+
+  /**
+   * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
+ * CSV-based signal monitoring configuration.
+ *
+ * Monitors signals for entities uploaded via CSV file.
+ *
+ * Attributes: type: Config type discriminator (always "signal-csv"). file_id: ID
+ * of the uploaded CSV file. signal_types: Types of signals to monitor.
+ * entity_type: Type of entity being monitored (default: company). primary_column:
+ * Column containing entity names (default: "name"). monitoring_frequency: How
+ * often to check (daily/weekly/monthly). webhook_url: Optional webhook URL for
+ * completion notification.
+ *
+ * Example: >>> config = SignalCSVConfigRequest( ... file_id="abc123", ...
+ * signal_types=[SignalTypeConfig(type="hiring_surge", ...)] ... )
+ */
+export interface SignalCsvConfig {
+  /**
+   * ID of the uploaded CSV file
+   */
+  file_id: string;
+
+  /**
+   * Types of signals to monitor
+   */
+  signal_types: Array<SignalTypeConfig>;
+
+  /**
+   * Type of entity being monitored
+   */
+  entity_type?: SheetAPI.EntityType;
+
+  /**
+   * How often to check for new signals
+   */
+  monitoring_frequency?: 'daily' | 'weekly' | 'monthly';
+
+  /**
+   * Column containing entity names
+   */
+  primary_column?: string;
+
+  /**
+   * Config type discriminator
+   */
+  type?: 'signal-csv';
+
+  /**
+   * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
+ * Sheet-based signal monitoring configuration.
+ *
+ * Monitors signals for entities from an existing discovery ICP's sheet.
+ *
+ * Attributes: type: Config type discriminator (always "signal-sheet").
+ * source_icp_id: ID of the discovery ICP containing entities to monitor.
+ * signal_types: Types of signals to monitor. entity_type: Type of entity being
+ * monitored (default: company). entity_filters: Optional MongoDB query to filter
+ * entities. monitoring_frequency: How often to check (daily/weekly/monthly).
+ * webhook_url: Optional webhook URL for completion notification.
+ *
+ * Example: >>> config = SignalSheetConfigRequest( ... source_icp_id="icp123", ...
+ * signal_types=[SignalTypeConfig(type="leadership_change", ...)] ... )
+ */
+export interface SignalSheetConfig {
+  /**
+   * Types of signals to monitor
+   */
+  signal_types: Array<SignalTypeConfig>;
+
+  /**
+   * ID of the discovery ICP containing entities to monitor
+   */
+  source_icp_id: string;
+
+  /**
+   * Optional MongoDB query to filter entities
+   */
+  entity_filters?: { [key: string]: unknown } | null;
+
+  /**
+   * Type of entity being monitored
+   */
+  entity_type?: SheetAPI.EntityType;
+
+  /**
+   * How often to check for new signals
+   */
+  monitoring_frequency?: 'daily' | 'weekly' | 'monthly';
+
+  /**
+   * Config type discriminator
+   */
+  type?: 'signal-sheet';
+
+  /**
+   * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
+ * Topic-based signal monitoring configuration.
+ *
+ * Monitors for signals based on topic criteria without requiring pre-existing
+ * entities.
+ *
+ * Attributes: type: Config type discriminator (always "signal-topic").
+ * topic_criteria: Natural language description of what to monitor. signal_types:
+ * Types of signals to monitor. entity_type: Type of entity being monitored
+ * (default: company). monitoring_frequency: How often to check
+ * (daily/weekly/monthly). geographic_filters: Optional geographic regions to focus
+ * on. industry_filters: Optional industries to focus on. company_size_filters:
+ * Optional company size criteria. webhook_url: Optional webhook URL for completion
+ * notification.
+ *
+ * Example: >>> config = SignalTopicConfigRequest( ... topic_criteria="AI startups
+ * raising Series A", ... signal_types=[SignalTypeConfig(type="funding", ...)] ...
+ * )
+ */
+export interface SignalTopicConfig {
+  /**
+   * Types of signals to monitor
+   */
+  signal_types: Array<SignalTypeConfig>;
+
+  /**
+   * Natural language description of what to monitor
+   */
+  topic_criteria: string;
+
+  /**
+   * Company size criteria
+   */
+  company_size_filters?: Array<string> | null;
+
+  /**
+   * Type of entity being monitored
+   */
+  entity_type?: SheetAPI.EntityType;
+
+  /**
+   * Geographic regions to focus on
+   */
+  geographic_filters?: Array<string> | null;
+
+  /**
+   * Industries to focus on
+   */
+  industry_filters?: Array<string> | null;
+
+  /**
+   * How often to check for new signals
+   */
+  monitoring_frequency?: 'daily' | 'weekly' | 'monthly';
+
+  /**
+   * Config type discriminator
+   */
+  type?: 'signal-topic';
+
+  /**
+   * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
  * Configuration for a single signal type to monitor.
  *
  * Allows both standard signal types and custom types using OTHER.
@@ -1168,291 +1444,13 @@ export interface TaskCreateParams {
    * Flow-specific task configuration with type discriminator
    */
   task_config?:
-    | TaskCreateParams.SearchTaskConfigRequest
-    | TaskCreateParams.IngestTaskConfigRequest
-    | TaskCreateParams.ProfilePromptConfigRequest
-    | TaskCreateParams.SignalTopicConfigRequest
-    | TaskCreateParams.SignalCsvConfigRequest
-    | TaskCreateParams.SignalSheetConfigRequest
+    | SearchTaskConfig
+    | IngestTaskConfig
+    | ProfilePromptConfig
+    | SignalTopicConfig
+    | SignalCsvConfig
+    | SignalSheetConfig
     | null;
-}
-
-export namespace TaskCreateParams {
-  /**
-   * Search task configuration for finding companies and contacts.
-   *
-   * Creates a v3.0 search workflow that uses AI agents to discover entities matching
-   * your ICP criteria.
-   *
-   * Attributes: type: Config type discriminator (always "search").
-   * desired_contact_count: Number of contacts to find per company (minimum: 1).
-   * user_feedback: Optional feedback to refine search behavior. webhook_url:
-   * Optional webhook URL for completion notification.
-   *
-   * Example: >>> config = SearchTaskConfigRequest(desired_contact_count=5) >>>
-   * mongo_config = config.to_mongo_config() >>> mongo_config.version 'v3.0'
-   */
-  export interface SearchTaskConfigRequest {
-    /**
-     * Number of contacts to find per company (minimum: 1)
-     */
-    desired_contact_count?: number;
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'search';
-
-    /**
-     * Optional feedback to refine search behavior
-     */
-    user_feedback?: string;
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * CSV enrichment task configuration.
-   *
-   * Enriches entities from an uploaded CSV file with additional data discovered by
-   * AI agents.
-   *
-   * Attributes: type: Config type discriminator (always "ingest"). file_id: ID of
-   * the uploaded CSV file to process. primary_column: Column containing entity names
-   * for matching. csv_entity_type: Entity type in the CSV (e.g., 'person',
-   * 'company'). webhook_url: Optional webhook URL for completion notification.
-   *
-   * Example: >>> config = IngestTaskConfigRequest( ... file_id="abc123", ...
-   * primary_column="company_name", ... csv_entity_type="company" ... )
-   */
-  export interface IngestTaskConfigRequest {
-    /**
-     * Entity type in the CSV (e.g., 'person', 'company')
-     */
-    csv_entity_type: string;
-
-    /**
-     * ID of the uploaded CSV file to process
-     */
-    file_id: string;
-
-    /**
-     * Column containing entity names for matching
-     */
-    primary_column: string;
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'ingest';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Profile prompt task configuration.
-   *
-   * Configures a profile workflow with a custom prompt template.
-   *
-   * Attributes: type: Config type discriminator (always "profile"). prompt: Jinja2
-   * template for task instructions. webhook_url: Optional webhook URL for completion
-   * notification.
-   *
-   * Example: >>> config = ProfilePromptConfigRequest( ... prompt="Analyze
-   * {{ company_name }} and extract key metrics." ... )
-   */
-  export interface ProfilePromptConfigRequest {
-    /**
-     * Jinja2 template for task instructions
-     */
-    prompt: string;
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'profile';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Topic-based signal monitoring configuration.
-   *
-   * Monitors for signals based on topic criteria without requiring pre-existing
-   * entities.
-   *
-   * Attributes: type: Config type discriminator (always "signal-topic").
-   * topic_criteria: Natural language description of what to monitor. signal_types:
-   * Types of signals to monitor. entity_type: Type of entity being monitored
-   * (default: company). monitoring_frequency: How often to check
-   * (daily/weekly/monthly). geographic_filters: Optional geographic regions to focus
-   * on. industry_filters: Optional industries to focus on. company_size_filters:
-   * Optional company size criteria. webhook_url: Optional webhook URL for completion
-   * notification.
-   *
-   * Example: >>> config = SignalTopicConfigRequest( ... topic_criteria="AI startups
-   * raising Series A", ... signal_types=[SignalTypeConfig(type="funding", ...)] ...
-   * )
-   */
-  export interface SignalTopicConfigRequest {
-    /**
-     * Types of signals to monitor
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * Natural language description of what to monitor
-     */
-    topic_criteria: string;
-
-    /**
-     * Company size criteria
-     */
-    company_size_filters?: Array<string> | null;
-
-    /**
-     * Type of entity being monitored
-     */
-    entity_type?: SheetAPI.EntityType;
-
-    /**
-     * Geographic regions to focus on
-     */
-    geographic_filters?: Array<string> | null;
-
-    /**
-     * Industries to focus on
-     */
-    industry_filters?: Array<string> | null;
-
-    /**
-     * How often to check for new signals
-     */
-    monitoring_frequency?: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'signal-topic';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * CSV-based signal monitoring configuration.
-   *
-   * Monitors signals for entities uploaded via CSV file.
-   *
-   * Attributes: type: Config type discriminator (always "signal-csv"). file_id: ID
-   * of the uploaded CSV file. signal_types: Types of signals to monitor.
-   * entity_type: Type of entity being monitored (default: company). primary_column:
-   * Column containing entity names (default: "name"). monitoring_frequency: How
-   * often to check (daily/weekly/monthly). webhook_url: Optional webhook URL for
-   * completion notification.
-   *
-   * Example: >>> config = SignalCSVConfigRequest( ... file_id="abc123", ...
-   * signal_types=[SignalTypeConfig(type="hiring_surge", ...)] ... )
-   */
-  export interface SignalCsvConfigRequest {
-    /**
-     * ID of the uploaded CSV file
-     */
-    file_id: string;
-
-    /**
-     * Types of signals to monitor
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * Type of entity being monitored
-     */
-    entity_type?: SheetAPI.EntityType;
-
-    /**
-     * How often to check for new signals
-     */
-    monitoring_frequency?: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Column containing entity names
-     */
-    primary_column?: string;
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'signal-csv';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Sheet-based signal monitoring configuration.
-   *
-   * Monitors signals for entities from an existing discovery ICP's sheet.
-   *
-   * Attributes: type: Config type discriminator (always "signal-sheet").
-   * source_icp_id: ID of the discovery ICP containing entities to monitor.
-   * signal_types: Types of signals to monitor. entity_type: Type of entity being
-   * monitored (default: company). entity_filters: Optional MongoDB query to filter
-   * entities. monitoring_frequency: How often to check (daily/weekly/monthly).
-   * webhook_url: Optional webhook URL for completion notification.
-   *
-   * Example: >>> config = SignalSheetConfigRequest( ... source_icp_id="icp123", ...
-   * signal_types=[SignalTypeConfig(type="leadership_change", ...)] ... )
-   */
-  export interface SignalSheetConfigRequest {
-    /**
-     * Types of signals to monitor
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * ID of the discovery ICP containing entities to monitor
-     */
-    source_icp_id: string;
-
-    /**
-     * Optional MongoDB query to filter entities
-     */
-    entity_filters?: { [key: string]: unknown } | null;
-
-    /**
-     * Type of entity being monitored
-     */
-    entity_type?: SheetAPI.EntityType;
-
-    /**
-     * How often to check for new signals
-     */
-    monitoring_frequency?: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'signal-sheet';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
 }
 
 export interface TaskUpdateParams {
@@ -1485,291 +1483,13 @@ export interface TaskUpdateParams {
    * Updated flow-specific task configuration with type discriminator
    */
   task_config?:
-    | TaskUpdateParams.SearchTaskConfigRequest
-    | TaskUpdateParams.IngestTaskConfigRequest
-    | TaskUpdateParams.ProfilePromptConfigRequest
-    | TaskUpdateParams.SignalTopicConfigRequest
-    | TaskUpdateParams.SignalCsvConfigRequest
-    | TaskUpdateParams.SignalSheetConfigRequest
+    | SearchTaskConfig
+    | IngestTaskConfig
+    | ProfilePromptConfig
+    | SignalTopicConfig
+    | SignalCsvConfig
+    | SignalSheetConfig
     | null;
-}
-
-export namespace TaskUpdateParams {
-  /**
-   * Search task configuration for finding companies and contacts.
-   *
-   * Creates a v3.0 search workflow that uses AI agents to discover entities matching
-   * your ICP criteria.
-   *
-   * Attributes: type: Config type discriminator (always "search").
-   * desired_contact_count: Number of contacts to find per company (minimum: 1).
-   * user_feedback: Optional feedback to refine search behavior. webhook_url:
-   * Optional webhook URL for completion notification.
-   *
-   * Example: >>> config = SearchTaskConfigRequest(desired_contact_count=5) >>>
-   * mongo_config = config.to_mongo_config() >>> mongo_config.version 'v3.0'
-   */
-  export interface SearchTaskConfigRequest {
-    /**
-     * Number of contacts to find per company (minimum: 1)
-     */
-    desired_contact_count?: number;
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'search';
-
-    /**
-     * Optional feedback to refine search behavior
-     */
-    user_feedback?: string;
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * CSV enrichment task configuration.
-   *
-   * Enriches entities from an uploaded CSV file with additional data discovered by
-   * AI agents.
-   *
-   * Attributes: type: Config type discriminator (always "ingest"). file_id: ID of
-   * the uploaded CSV file to process. primary_column: Column containing entity names
-   * for matching. csv_entity_type: Entity type in the CSV (e.g., 'person',
-   * 'company'). webhook_url: Optional webhook URL for completion notification.
-   *
-   * Example: >>> config = IngestTaskConfigRequest( ... file_id="abc123", ...
-   * primary_column="company_name", ... csv_entity_type="company" ... )
-   */
-  export interface IngestTaskConfigRequest {
-    /**
-     * Entity type in the CSV (e.g., 'person', 'company')
-     */
-    csv_entity_type: string;
-
-    /**
-     * ID of the uploaded CSV file to process
-     */
-    file_id: string;
-
-    /**
-     * Column containing entity names for matching
-     */
-    primary_column: string;
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'ingest';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Profile prompt task configuration.
-   *
-   * Configures a profile workflow with a custom prompt template.
-   *
-   * Attributes: type: Config type discriminator (always "profile"). prompt: Jinja2
-   * template for task instructions. webhook_url: Optional webhook URL for completion
-   * notification.
-   *
-   * Example: >>> config = ProfilePromptConfigRequest( ... prompt="Analyze
-   * {{ company_name }} and extract key metrics." ... )
-   */
-  export interface ProfilePromptConfigRequest {
-    /**
-     * Jinja2 template for task instructions
-     */
-    prompt: string;
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'profile';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Topic-based signal monitoring configuration.
-   *
-   * Monitors for signals based on topic criteria without requiring pre-existing
-   * entities.
-   *
-   * Attributes: type: Config type discriminator (always "signal-topic").
-   * topic_criteria: Natural language description of what to monitor. signal_types:
-   * Types of signals to monitor. entity_type: Type of entity being monitored
-   * (default: company). monitoring_frequency: How often to check
-   * (daily/weekly/monthly). geographic_filters: Optional geographic regions to focus
-   * on. industry_filters: Optional industries to focus on. company_size_filters:
-   * Optional company size criteria. webhook_url: Optional webhook URL for completion
-   * notification.
-   *
-   * Example: >>> config = SignalTopicConfigRequest( ... topic_criteria="AI startups
-   * raising Series A", ... signal_types=[SignalTypeConfig(type="funding", ...)] ...
-   * )
-   */
-  export interface SignalTopicConfigRequest {
-    /**
-     * Types of signals to monitor
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * Natural language description of what to monitor
-     */
-    topic_criteria: string;
-
-    /**
-     * Company size criteria
-     */
-    company_size_filters?: Array<string> | null;
-
-    /**
-     * Type of entity being monitored
-     */
-    entity_type?: SheetAPI.EntityType;
-
-    /**
-     * Geographic regions to focus on
-     */
-    geographic_filters?: Array<string> | null;
-
-    /**
-     * Industries to focus on
-     */
-    industry_filters?: Array<string> | null;
-
-    /**
-     * How often to check for new signals
-     */
-    monitoring_frequency?: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'signal-topic';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * CSV-based signal monitoring configuration.
-   *
-   * Monitors signals for entities uploaded via CSV file.
-   *
-   * Attributes: type: Config type discriminator (always "signal-csv"). file_id: ID
-   * of the uploaded CSV file. signal_types: Types of signals to monitor.
-   * entity_type: Type of entity being monitored (default: company). primary_column:
-   * Column containing entity names (default: "name"). monitoring_frequency: How
-   * often to check (daily/weekly/monthly). webhook_url: Optional webhook URL for
-   * completion notification.
-   *
-   * Example: >>> config = SignalCSVConfigRequest( ... file_id="abc123", ...
-   * signal_types=[SignalTypeConfig(type="hiring_surge", ...)] ... )
-   */
-  export interface SignalCsvConfigRequest {
-    /**
-     * ID of the uploaded CSV file
-     */
-    file_id: string;
-
-    /**
-     * Types of signals to monitor
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * Type of entity being monitored
-     */
-    entity_type?: SheetAPI.EntityType;
-
-    /**
-     * How often to check for new signals
-     */
-    monitoring_frequency?: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Column containing entity names
-     */
-    primary_column?: string;
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'signal-csv';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Sheet-based signal monitoring configuration.
-   *
-   * Monitors signals for entities from an existing discovery ICP's sheet.
-   *
-   * Attributes: type: Config type discriminator (always "signal-sheet").
-   * source_icp_id: ID of the discovery ICP containing entities to monitor.
-   * signal_types: Types of signals to monitor. entity_type: Type of entity being
-   * monitored (default: company). entity_filters: Optional MongoDB query to filter
-   * entities. monitoring_frequency: How often to check (daily/weekly/monthly).
-   * webhook_url: Optional webhook URL for completion notification.
-   *
-   * Example: >>> config = SignalSheetConfigRequest( ... source_icp_id="icp123", ...
-   * signal_types=[SignalTypeConfig(type="leadership_change", ...)] ... )
-   */
-  export interface SignalSheetConfigRequest {
-    /**
-     * Types of signals to monitor
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * ID of the discovery ICP containing entities to monitor
-     */
-    source_icp_id: string;
-
-    /**
-     * Optional MongoDB query to filter entities
-     */
-    entity_filters?: { [key: string]: unknown } | null;
-
-    /**
-     * Type of entity being monitored
-     */
-    entity_type?: SheetAPI.EntityType;
-
-    /**
-     * How often to check for new signals
-     */
-    monitoring_frequency?: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Config type discriminator
-     */
-    type?: 'signal-sheet';
-
-    /**
-     * Optional webhook URL to notify when workflow completes
-     */
-    webhook_url?: string | null;
-  }
 }
 
 export interface TaskListParams {
@@ -1813,6 +1533,12 @@ export interface TaskExecuteParams {
 
 export declare namespace Task {
   export {
+    type IngestTaskConfig as IngestTaskConfig,
+    type ProfilePromptConfig as ProfilePromptConfig,
+    type SearchTaskConfig as SearchTaskConfig,
+    type SignalCsvConfig as SignalCsvConfig,
+    type SignalSheetConfig as SignalSheetConfig,
+    type SignalTopicConfig as SignalTopicConfig,
     type SignalTypeConfig as SignalTypeConfig,
     type TaskCreateResponse as TaskCreateResponse,
     type TaskRetrieveResponse as TaskRetrieveResponse,

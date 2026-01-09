@@ -45,6 +45,12 @@ export {
 export { Signal, type SignalResponse, type SignalListResponse, type SignalListParams } from './signal';
 export {
   Task,
+  type IngestTaskConfig,
+  type ProfilePromptConfig,
+  type SearchTaskConfig,
+  type SignalCsvConfig,
+  type SignalSheetConfig,
+  type SignalTopicConfig,
   type SignalTypeConfig,
   type TaskCreateResponse,
   type TaskRetrieveResponse,

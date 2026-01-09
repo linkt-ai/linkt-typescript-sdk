@@ -48,6 +48,12 @@ import {
 } from './resources/run';
 import { Signal, SignalListParams, SignalListResponse, SignalResponse } from './resources/signal';
 import {
+  IngestTaskConfig,
+  ProfilePromptConfig,
+  SearchTaskConfig,
+  SignalCsvConfig,
+  SignalSheetConfig,
+  SignalTopicConfig,
   SignalTypeConfig,
   Task,
   TaskCreateParams,
@@ -822,6 +828,12 @@ export declare namespace Linkt {
 
   export {
     Task as Task,
+    type IngestTaskConfig as IngestTaskConfig,
+    type ProfilePromptConfig as ProfilePromptConfig,
+    type SearchTaskConfig as SearchTaskConfig,
+    type SignalCsvConfig as SignalCsvConfig,
+    type SignalSheetConfig as SignalSheetConfig,
+    type SignalTopicConfig as SignalTopicConfig,
     type SignalTypeConfig as SignalTypeConfig,
     type TaskCreateResponse as TaskCreateResponse,
     type TaskRetrieveResponse as TaskRetrieveResponse,
