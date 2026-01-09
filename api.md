@@ -68,6 +68,12 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/task.ts">IngestTaskConfig</a></code>
+- <code><a href="./src/resources/task.ts">ProfilePromptConfig</a></code>
+- <code><a href="./src/resources/task.ts">SearchTaskConfig</a></code>
+- <code><a href="./src/resources/task.ts">SignalCsvConfig</a></code>
+- <code><a href="./src/resources/task.ts">SignalSheetConfig</a></code>
+- <code><a href="./src/resources/task.ts">SignalTopicConfig</a></code>
 - <code><a href="./src/resources/task.ts">SignalTypeConfig</a></code>
 - <code><a href="./src/resources/task.ts">TaskCreateResponse</a></code>
 - <code><a href="./src/resources/task.ts">TaskRetrieveResponse</a></code>
