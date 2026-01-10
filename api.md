@@ -69,13 +69,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/task.ts">IngestTaskConfig</a></code>
-- <code><a href="./src/resources/task.ts">SearchV2Config</a></code>
-- <code><a href="./src/resources/task.ts">SearchV3Config</a></code>
-- <code><a href="./src/resources/task.ts">SignalCsvConfigInput</a></code>
-- <code><a href="./src/resources/task.ts">SignalSheetConfigInput</a></code>
-- <code><a href="./src/resources/task.ts">SignalTopicConfigInput</a></code>
+- <code><a href="./src/resources/task.ts">ProfilePromptConfig</a></code>
+- <code><a href="./src/resources/task.ts">SearchTaskConfig</a></code>
+- <code><a href="./src/resources/task.ts">SignalCsvConfig</a></code>
+- <code><a href="./src/resources/task.ts">SignalSheetConfig</a></code>
+- <code><a href="./src/resources/task.ts">SignalTopicConfig</a></code>
 - <code><a href="./src/resources/task.ts">SignalTypeConfig</a></code>
-- <code><a href="./src/resources/task.ts">StandardPromptConfig</a></code>
 - <code><a href="./src/resources/task.ts">TaskCreateResponse</a></code>
 - <code><a href="./src/resources/task.ts">TaskRetrieveResponse</a></code>
 - <code><a href="./src/resources/task.ts">TaskListResponse</a></code>
