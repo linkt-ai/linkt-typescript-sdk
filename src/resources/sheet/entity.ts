@@ -65,7 +65,7 @@ export interface EntityRetrieveParams {
 
 export interface EntityUpdateCommentsParams {
   /**
-   * Path param:
+   * Path param
    */
   sheet_id: string;
 
@@ -77,12 +77,12 @@ export interface EntityUpdateCommentsParams {
 
 export interface EntityUpdateStatusParams {
   /**
-   * Path param:
+   * Path param
    */
   sheet_id: string;
 
   /**
-   * Body param:
+   * Body param
    */
   status: boolean;
 }
