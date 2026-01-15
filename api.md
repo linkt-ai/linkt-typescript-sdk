@@ -23,8 +23,6 @@ Types:
 - <code><a href="./src/resources/sheet/sheet.ts">EntityType</a></code>
 - <code><a href="./src/resources/sheet/sheet.ts">Sheet</a></code>
 - <code><a href="./src/resources/sheet/sheet.ts">SheetListResponse</a></code>
-- <code><a href="./src/resources/sheet/sheet.ts">SheetExportCsvResponse</a></code>
-- <code><a href="./src/resources/sheet/sheet.ts">SheetGetEntitiesResponse</a></code>
 
 Methods:
 
@@ -33,20 +31,8 @@ Methods:
 - <code title="put /v1/sheet/{sheet_id}">client.sheet.<a href="./src/resources/sheet/sheet.ts">update</a>(sheetID, { ...params }) -> void</code>
 - <code title="get /v1/sheet">client.sheet.<a href="./src/resources/sheet/sheet.ts">list</a>({ ...params }) -> SheetListResponse</code>
 - <code title="delete /v1/sheet/{sheet_id}">client.sheet.<a href="./src/resources/sheet/sheet.ts">delete</a>(sheetID) -> void</code>
-- <code title="get /v1/sheet/{sheet_id}/export-csv">client.sheet.<a href="./src/resources/sheet/sheet.ts">exportCsv</a>(sheetID, { ...params }) -> unknown</code>
-- <code title="get /v1/sheet/{sheet_id}/entities">client.sheet.<a href="./src/resources/sheet/sheet.ts">getEntities</a>(sheetID, { ...params }) -> SheetGetEntitiesResponse</code>
 
 ## Entity
-
-Types:
-
-- <code><a href="./src/resources/sheet/entity.ts">EntityRetrieveResponse</a></code>
-
-Methods:
-
-- <code title="get /v1/sheet/{sheet_id}/entity/{entity_id}">client.sheet.entity.<a href="./src/resources/sheet/entity.ts">retrieve</a>(entityID, { ...params }) -> EntityRetrieveResponse</code>
-- <code title="put /v1/sheet/{sheet_id}/entity/{entity_id}/comments">client.sheet.entity.<a href="./src/resources/sheet/entity.ts">updateComments</a>(entityID, { ...params }) -> void</code>
-- <code title="put /v1/sheet/{sheet_id}/entity/{entity_id}/status">client.sheet.entity.<a href="./src/resources/sheet/entity.ts">updateStatus</a>(entityID, { ...params }) -> void</code>
 
 ## Schema
 

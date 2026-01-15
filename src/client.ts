@@ -11,7 +11,6 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
-import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
@@ -69,10 +68,6 @@ import {
   EntityType,
   Sheet,
   SheetCreateParams,
-  SheetExportCsvParams,
-  SheetExportCsvResponse,
-  SheetGetEntitiesParams,
-  SheetGetEntitiesResponse,
   SheetListParams,
   SheetListResponse,
   SheetResource,
@@ -295,8 +290,24 @@ export class Linkt {
     return buildHeaders([{ 'x-api-key': this.apiKey }]);
   }
 
+  /**
+   * Basic re-implementation of `qs.stringify` for primitive types.
+   */
   protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+    return Object.entries(query)
+      .filter(([_, value]) => typeof value !== 'undefined')
+      .map(([key, value]) => {
+        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+        }
+        if (value === null) {
+          return `${encodeURIComponent(key)}=`;
+        }
+        throw new Errors.LinktError(
+          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
+        );
+      })
+      .join('&');
   }
 
   private getUserAgent(): string {
@@ -817,13 +828,9 @@ export declare namespace Linkt {
     type EntityType as EntityType,
     type Sheet as Sheet,
     type SheetListResponse as SheetListResponse,
-    type SheetExportCsvResponse as SheetExportCsvResponse,
-    type SheetGetEntitiesResponse as SheetGetEntitiesResponse,
     type SheetCreateParams as SheetCreateParams,
     type SheetUpdateParams as SheetUpdateParams,
     type SheetListParams as SheetListParams,
-    type SheetExportCsvParams as SheetExportCsvParams,
-    type SheetGetEntitiesParams as SheetGetEntitiesParams,
   };
 
   export {
