@@ -2,13 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as EntityAPI from './entity';
-import {
-  Entity,
-  EntityRetrieveParams,
-  EntityRetrieveResponse,
-  EntityUpdateCommentsParams,
-  EntityUpdateStatusParams,
-} from './entity';
+import { Entity } from './entity';
 import * as SchemaAPI from './schema';
 import {
   Schema,
@@ -83,34 +77,6 @@ export class SheetResource extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
-
-  /**
-   * Export sheet entities as a CSV file.
-   *
-   * Exports entities with proper field formatting based on the sheet's schema. Pass
-   * specific entity_ids to export a subset, or omit to export all entities.
-   */
-  exportCsv(
-    sheetID: string,
-    query: SheetExportCsvParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    return this._client.get(path`/v1/sheet/${sheetID}/export-csv`, { query, ...options });
-  }
-
-  /**
-   * List all entities in a sheet.
-   *
-   * Supports text search across name/company fields and comprehensive filtering by
-   * status, comments, and date ranges.
-   */
-  getEntities(
-    sheetID: string,
-    query: SheetGetEntitiesParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<SheetGetEntitiesResponse> {
-    return this._client.get(path`/v1/sheet/${sheetID}/entities`, { query, ...options });
-  }
 }
 
 /**
@@ -148,28 +114,6 @@ export interface SheetListResponse {
   page_size: number;
 
   sheets: Array<{ [key: string]: unknown }>;
-
-  total: number;
-}
-
-export type SheetExportCsvResponse = unknown;
-
-/**
- * Response schema for paginated list of sheet entities.
- *
- * Uses EntityForHTTP which automatically excludes embedding data for efficient API
- * responses.
- *
- * Attributes: entities: List of EntityForHTTP objects for the current page total:
- * Total number of entities matching the filter criteria page: Current page number
- * (1-based) page_size: Number of items per page
- */
-export interface SheetGetEntitiesResponse {
-  entities: Array<{ [key: string]: unknown }>;
-
-  page: number;
-
-  page_size: number;
 
   total: number;
 }
@@ -218,70 +162,6 @@ export interface SheetListParams {
   sort_by?: string | null;
 }
 
-export interface SheetExportCsvParams {
-  /**
-   * Optional list of entity IDs to export. If not provided, exports all entities.
-   */
-  entity_ids?: Array<string> | null;
-}
-
-export interface SheetGetEntitiesParams {
-  /**
-   * Filter entities created after this date (ISO 8601 format: 2024-01-15T10:30:00Z)
-   */
-  created_after?: string | null;
-
-  /**
-   * Filter entities created before this date (ISO 8601 format)
-   */
-  created_before?: string | null;
-
-  /**
-   * Filter entities with or without user comments
-   */
-  has_comments?: boolean | null;
-
-  /**
-   * Sort order: -1 for descending, 1 for ascending
-   */
-  order?: number | null;
-
-  /**
-   * Page number (1-based)
-   */
-  page?: number;
-
-  /**
-   * Items per page (max 100, default 50)
-   */
-  page_size?: number;
-
-  /**
-   * Search entities by name or company
-   */
-  search?: string | null;
-
-  /**
-   * Field to sort by (e.g., 'created_at', 'updated_at', 'status')
-   */
-  sort_by?: string | null;
-
-  /**
-   * Filter by entity status (true=active, false=inactive)
-   */
-  status?: boolean | null;
-
-  /**
-   * Filter entities updated after this date (ISO 8601 format)
-   */
-  updated_after?: string | null;
-
-  /**
-   * Filter entities updated before this date (ISO 8601 format)
-   */
-  updated_before?: string | null;
-}
-
 SheetResource.Entity = Entity;
 SheetResource.Schema = Schema;
 
@@ -290,22 +170,12 @@ export declare namespace SheetResource {
     type EntityType as EntityType,
     type Sheet as Sheet,
     type SheetListResponse as SheetListResponse,
-    type SheetExportCsvResponse as SheetExportCsvResponse,
-    type SheetGetEntitiesResponse as SheetGetEntitiesResponse,
     type SheetCreateParams as SheetCreateParams,
     type SheetUpdateParams as SheetUpdateParams,
     type SheetListParams as SheetListParams,
-    type SheetExportCsvParams as SheetExportCsvParams,
-    type SheetGetEntitiesParams as SheetGetEntitiesParams,
   };
 
-  export {
-    Entity as Entity,
-    type EntityRetrieveResponse as EntityRetrieveResponse,
-    type EntityRetrieveParams as EntityRetrieveParams,
-    type EntityUpdateCommentsParams as EntityUpdateCommentsParams,
-    type EntityUpdateStatusParams as EntityUpdateStatusParams,
-  };
+  export { Entity as Entity };
 
   export {
     Schema as Schema,
