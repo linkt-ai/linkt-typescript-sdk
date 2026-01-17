@@ -34,13 +34,9 @@ export {
   type EntityType,
   type Sheet,
   type SheetListResponse,
-  type SheetExportCsvResponse,
-  type SheetGetEntitiesResponse,
   type SheetCreateParams,
   type SheetUpdateParams,
   type SheetListParams,
-  type SheetExportCsvParams,
-  type SheetGetEntitiesParams,
 } from './sheet/sheet';
 export { Signal, type SignalResponse, type SignalListResponse, type SignalListParams } from './signal';
 export {

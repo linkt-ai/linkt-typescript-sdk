@@ -499,6 +499,7 @@ export interface TaskCreateResponse {
   task_config?:
     | TaskCreateResponse.SearchTaskConfigResponse
     | TaskCreateResponse.IngestTaskConfigResponse
+    | TaskCreateResponse.IngestPromptConfigResponse
     | TaskCreateResponse.ProfilePromptConfigResponse
     | TaskCreateResponse.SignalTopicConfigResponse
     | TaskCreateResponse.SignalCsvConfigResponse
@@ -564,6 +565,31 @@ export namespace TaskCreateResponse {
     primary_column: string;
 
     type?: 'ingest';
+
+    /**
+     * Webhook URL for completion notification
+     */
+    webhook_url?: string | null;
+  }
+
+  /**
+   * Ingest prompt configuration in API responses.
+   *
+   * Response model for prompt-based ingest task configs that excludes
+   * backend-managed fields from the API surface. This is for simple prompt-based
+   * ingest workflows, distinct from IngestTaskConfigResponse which is for CSV
+   * enrichment tasks.
+   *
+   * Attributes: type: Config type discriminator (always "ingest-prompt"). prompt:
+   * Task prompt template. webhook_url: Webhook URL for completion notification.
+   */
+  export interface IngestPromptConfigResponse {
+    /**
+     * Task prompt template
+     */
+    prompt: string;
+
+    type?: 'ingest-prompt';
 
     /**
      * Webhook URL for completion notification
@@ -806,6 +832,7 @@ export interface TaskRetrieveResponse {
   task_config?:
     | TaskRetrieveResponse.SearchTaskConfigResponse
     | TaskRetrieveResponse.IngestTaskConfigResponse
+    | TaskRetrieveResponse.IngestPromptConfigResponse
     | TaskRetrieveResponse.ProfilePromptConfigResponse
     | TaskRetrieveResponse.SignalTopicConfigResponse
     | TaskRetrieveResponse.SignalCsvConfigResponse
@@ -871,6 +898,31 @@ export namespace TaskRetrieveResponse {
     primary_column: string;
 
     type?: 'ingest';
+
+    /**
+     * Webhook URL for completion notification
+     */
+    webhook_url?: string | null;
+  }
+
+  /**
+   * Ingest prompt configuration in API responses.
+   *
+   * Response model for prompt-based ingest task configs that excludes
+   * backend-managed fields from the API surface. This is for simple prompt-based
+   * ingest workflows, distinct from IngestTaskConfigResponse which is for CSV
+   * enrichment tasks.
+   *
+   * Attributes: type: Config type discriminator (always "ingest-prompt"). prompt:
+   * Task prompt template. webhook_url: Webhook URL for completion notification.
+   */
+  export interface IngestPromptConfigResponse {
+    /**
+     * Task prompt template
+     */
+    prompt: string;
+
+    type?: 'ingest-prompt';
 
     /**
      * Webhook URL for completion notification
@@ -1142,6 +1194,7 @@ export namespace TaskListResponse {
     task_config?:
       | Task.SearchTaskConfigResponse
       | Task.IngestTaskConfigResponse
+      | Task.IngestPromptConfigResponse
       | Task.ProfilePromptConfigResponse
       | Task.SignalTopicConfigResponse
       | Task.SignalCsvConfigResponse
@@ -1207,6 +1260,31 @@ export namespace TaskListResponse {
       primary_column: string;
 
       type?: 'ingest';
+
+      /**
+       * Webhook URL for completion notification
+       */
+      webhook_url?: string | null;
+    }
+
+    /**
+     * Ingest prompt configuration in API responses.
+     *
+     * Response model for prompt-based ingest task configs that excludes
+     * backend-managed fields from the API surface. This is for simple prompt-based
+     * ingest workflows, distinct from IngestTaskConfigResponse which is for CSV
+     * enrichment tasks.
+     *
+     * Attributes: type: Config type discriminator (always "ingest-prompt"). prompt:
+     * Task prompt template. webhook_url: Webhook URL for completion notification.
+     */
+    export interface IngestPromptConfigResponse {
+      /**
+       * Task prompt template
+       */
+      prompt: string;
+
+      type?: 'ingest-prompt';
 
       /**
        * Webhook URL for completion notification
