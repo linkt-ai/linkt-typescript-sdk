@@ -3,7 +3,6 @@
 export {
   Entity,
   type EntityResponse,
-  type EntityType,
   type EntityListResponse,
   type EntityBulkUpdateStatusResponse,
   type EntityExportResponse,
@@ -57,12 +56,19 @@ export {
 export { Signal, type SignalResponse, type SignalListResponse, type SignalListParams } from './signal';
 export {
   Task,
+  type IngestPromptConfigResponse,
   type IngestTaskConfig,
+  type IngestTaskConfigResponse,
   type ProfilePromptConfig,
+  type ProfilePromptConfigResponse,
   type SearchTaskConfig,
+  type SearchTaskConfigResponse,
   type SignalCsvConfig,
+  type SignalCsvConfigResponse,
   type SignalSheetConfig,
+  type SignalSheetConfigResponse,
   type SignalTopicConfig,
+  type SignalTopicConfigResponse,
   type SignalTypeConfig,
   type TaskCreateResponse,
   type TaskRetrieveResponse,
