@@ -51,8 +51,8 @@ export class Icp extends APIResource {
    * Delete an ICP and all related resources.
    *
    * **Cascade delete**: This permanently removes the ICP along with all associated
-   * sheets, entities, schedules, tasks, and signals. This operation cannot be
-   * undone.
+   * sheets, entities, schedules, tasks, signals, and actions. This operation cannot
+   * be undone.
    */
   delete(icpID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/v1/icp/${icpID}`, {

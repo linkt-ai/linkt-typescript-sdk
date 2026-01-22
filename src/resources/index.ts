@@ -1,6 +1,21 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
+  Entity,
+  type EntityResponse,
+  type EntityListResponse,
+  type EntityBulkUpdateStatusResponse,
+  type EntityExportResponse,
+  type EntityGetCountsResponse,
+  type EntitySearchResponse,
+  type EntityUpdateParams,
+  type EntityListParams,
+  type EntityBulkUpdateStatusParams,
+  type EntityExportParams,
+  type EntityGetCountsParams,
+  type EntitySearchParams,
+} from './entity';
+export {
   Files,
   type CsvProcessingStatus,
   type FileRetrieveResponse,
@@ -34,23 +49,26 @@ export {
   type EntityType,
   type Sheet,
   type SheetListResponse,
-  type SheetExportCsvResponse,
-  type SheetGetEntitiesResponse,
   type SheetCreateParams,
   type SheetUpdateParams,
   type SheetListParams,
-  type SheetExportCsvParams,
-  type SheetGetEntitiesParams,
 } from './sheet/sheet';
 export { Signal, type SignalResponse, type SignalListResponse, type SignalListParams } from './signal';
 export {
   Task,
+  type IngestPromptConfigResponse,
   type IngestTaskConfig,
+  type IngestTaskConfigResponse,
   type ProfilePromptConfig,
+  type ProfilePromptConfigResponse,
   type SearchTaskConfig,
+  type SearchTaskConfigResponse,
   type SignalCsvConfig,
+  type SignalCsvConfigResponse,
   type SignalSheetConfig,
+  type SignalSheetConfigResponse,
   type SignalTopicConfig,
+  type SignalTopicConfigResponse,
   type SignalTypeConfig,
   type TaskCreateResponse,
   type TaskRetrieveResponse,

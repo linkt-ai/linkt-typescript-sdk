@@ -1,13 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
-  Entity,
-  type EntityRetrieveResponse,
-  type EntityRetrieveParams,
-  type EntityUpdateCommentsParams,
-  type EntityUpdateStatusParams,
-} from './entity';
-export {
   Schema,
   type SchemaGetResponse,
   type SchemaGetDefaultResponse,
@@ -20,11 +13,7 @@ export {
   type EntityType,
   type Sheet,
   type SheetListResponse,
-  type SheetExportCsvResponse,
-  type SheetGetEntitiesResponse,
   type SheetCreateParams,
   type SheetUpdateParams,
   type SheetListParams,
-  type SheetExportCsvParams,
-  type SheetGetEntitiesParams,
 } from './sheet';

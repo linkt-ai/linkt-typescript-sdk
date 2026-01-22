@@ -18,6 +18,21 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  Entity,
+  EntityBulkUpdateStatusParams,
+  EntityBulkUpdateStatusResponse,
+  EntityExportParams,
+  EntityExportResponse,
+  EntityGetCountsParams,
+  EntityGetCountsResponse,
+  EntityListParams,
+  EntityListResponse,
+  EntityResponse,
+  EntitySearchParams,
+  EntitySearchResponse,
+  EntityUpdateParams,
+} from './resources/entity';
+import {
   CsvProcessingStatus,
   FileListParams,
   FileListResponse,
@@ -48,12 +63,19 @@ import {
 } from './resources/run';
 import { Signal, SignalListParams, SignalListResponse, SignalResponse } from './resources/signal';
 import {
+  IngestPromptConfigResponse,
   IngestTaskConfig,
+  IngestTaskConfigResponse,
   ProfilePromptConfig,
+  ProfilePromptConfigResponse,
   SearchTaskConfig,
+  SearchTaskConfigResponse,
   SignalCsvConfig,
+  SignalCsvConfigResponse,
   SignalSheetConfig,
+  SignalSheetConfigResponse,
   SignalTopicConfig,
+  SignalTopicConfigResponse,
   SignalTypeConfig,
   Task,
   TaskCreateParams,
@@ -69,10 +91,6 @@ import {
   EntityType,
   Sheet,
   SheetCreateParams,
-  SheetExportCsvParams,
-  SheetExportCsvResponse,
-  SheetGetEntitiesParams,
-  SheetGetEntitiesResponse,
   SheetListParams,
   SheetListResponse,
   SheetResource,
@@ -785,6 +803,7 @@ export class Linkt {
 
   icp: API.Icp = new API.Icp(this);
   sheet: API.SheetResource = new API.SheetResource(this);
+  entity: API.Entity = new API.Entity(this);
   task: API.Task = new API.Task(this);
   signal: API.Signal = new API.Signal(this);
   run: API.Run = new API.Run(this);
@@ -793,6 +812,7 @@ export class Linkt {
 
 Linkt.Icp = Icp;
 Linkt.SheetResource = SheetResource;
+Linkt.Entity = Entity;
 Linkt.Task = Task;
 Linkt.Signal = Signal;
 Linkt.Run = Run;
@@ -817,23 +837,42 @@ export declare namespace Linkt {
     type EntityType as EntityType,
     type Sheet as Sheet,
     type SheetListResponse as SheetListResponse,
-    type SheetExportCsvResponse as SheetExportCsvResponse,
-    type SheetGetEntitiesResponse as SheetGetEntitiesResponse,
     type SheetCreateParams as SheetCreateParams,
     type SheetUpdateParams as SheetUpdateParams,
     type SheetListParams as SheetListParams,
-    type SheetExportCsvParams as SheetExportCsvParams,
-    type SheetGetEntitiesParams as SheetGetEntitiesParams,
+  };
+
+  export {
+    Entity as Entity,
+    type EntityResponse as EntityResponse,
+    type EntityListResponse as EntityListResponse,
+    type EntityBulkUpdateStatusResponse as EntityBulkUpdateStatusResponse,
+    type EntityExportResponse as EntityExportResponse,
+    type EntityGetCountsResponse as EntityGetCountsResponse,
+    type EntitySearchResponse as EntitySearchResponse,
+    type EntityUpdateParams as EntityUpdateParams,
+    type EntityListParams as EntityListParams,
+    type EntityBulkUpdateStatusParams as EntityBulkUpdateStatusParams,
+    type EntityExportParams as EntityExportParams,
+    type EntityGetCountsParams as EntityGetCountsParams,
+    type EntitySearchParams as EntitySearchParams,
   };
 
   export {
     Task as Task,
+    type IngestPromptConfigResponse as IngestPromptConfigResponse,
     type IngestTaskConfig as IngestTaskConfig,
+    type IngestTaskConfigResponse as IngestTaskConfigResponse,
     type ProfilePromptConfig as ProfilePromptConfig,
+    type ProfilePromptConfigResponse as ProfilePromptConfigResponse,
     type SearchTaskConfig as SearchTaskConfig,
+    type SearchTaskConfigResponse as SearchTaskConfigResponse,
     type SignalCsvConfig as SignalCsvConfig,
+    type SignalCsvConfigResponse as SignalCsvConfigResponse,
     type SignalSheetConfig as SignalSheetConfig,
+    type SignalSheetConfigResponse as SignalSheetConfigResponse,
     type SignalTopicConfig as SignalTopicConfig,
+    type SignalTopicConfigResponse as SignalTopicConfigResponse,
     type SignalTypeConfig as SignalTypeConfig,
     type TaskCreateResponse as TaskCreateResponse,
     type TaskRetrieveResponse as TaskRetrieveResponse,

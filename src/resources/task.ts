@@ -121,6 +121,31 @@ export class Task extends APIResource {
 }
 
 /**
+ * Ingest prompt configuration in API responses.
+ *
+ * Response model for prompt-based ingest task configs that excludes
+ * backend-managed fields from the API surface. This is for simple prompt-based
+ * ingest workflows, distinct from IngestTaskConfigResponse which is for CSV
+ * enrichment tasks.
+ *
+ * Attributes: type: Config type discriminator (always "ingest-prompt"). prompt:
+ * Task prompt template. webhook_url: Webhook URL for completion notification.
+ */
+export interface IngestPromptConfigResponse {
+  /**
+   * Task prompt template
+   */
+  prompt: string;
+
+  type?: 'ingest-prompt';
+
+  /**
+   * Webhook URL for completion notification
+   */
+  webhook_url?: string | null;
+}
+
+/**
  * CSV enrichment task configuration.
  *
  * Enriches entities from an uploaded CSV file with additional data discovered by
@@ -162,6 +187,40 @@ export interface IngestTaskConfig {
 }
 
 /**
+ * Ingest task configuration in API responses.
+ *
+ * Response model for CSV enrichment task configs that excludes backend-managed
+ * fields from the API surface.
+ *
+ * Attributes: type: Config type discriminator (always "ingest"). file_id: ID of
+ * the CSV file. primary_column: Column containing entity names. csv_entity_type:
+ * Entity type in CSV. webhook_url: Webhook URL for completion notification.
+ */
+export interface IngestTaskConfigResponse {
+  /**
+   * Entity type in CSV
+   */
+  csv_entity_type: string;
+
+  /**
+   * ID of the CSV file
+   */
+  file_id: string;
+
+  /**
+   * Column containing entity names
+   */
+  primary_column: string;
+
+  type?: 'ingest';
+
+  /**
+   * Webhook URL for completion notification
+   */
+  webhook_url?: string | null;
+}
+
+/**
  * Profile prompt task configuration.
  *
  * Configures a profile workflow with a custom prompt template.
@@ -186,6 +245,29 @@ export interface ProfilePromptConfig {
 
   /**
    * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
+ * Profile prompt configuration in API responses.
+ *
+ * Response model for profile prompt task configs that excludes backend-managed
+ * fields from the API surface.
+ *
+ * Attributes: type: Config type discriminator (always "profile"). prompt: Task
+ * prompt template. webhook_url: Webhook URL for completion notification.
+ */
+export interface ProfilePromptConfigResponse {
+  /**
+   * Task prompt template
+   */
+  prompt: string;
+
+  type?: 'profile';
+
+  /**
+   * Webhook URL for completion notification
    */
   webhook_url?: string | null;
 }
@@ -222,6 +304,36 @@ export interface SearchTaskConfig {
 
   /**
    * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
+ * Search task configuration in API responses.
+ *
+ * Response model for search task configs that excludes backend-managed fields
+ * (version, config_type) from the API surface.
+ *
+ * Attributes: type: Config type discriminator (always "search").
+ * desired_contact_count: Number of contacts to find per company. user_feedback:
+ * Feedback to refine search behavior. webhook_url: Webhook URL for completion
+ * notification.
+ */
+export interface SearchTaskConfigResponse {
+  /**
+   * Number of contacts to find per company
+   */
+  desired_contact_count: number;
+
+  /**
+   * Feedback to refine search behavior
+   */
+  user_feedback: string;
+
+  type?: 'search';
+
+  /**
+   * Webhook URL for completion notification
    */
   webhook_url?: string | null;
 }
@@ -279,6 +391,51 @@ export interface SignalCsvConfig {
 }
 
 /**
+ * Signal CSV configuration in API responses.
+ *
+ * Response model for CSV-based signal monitoring configs.
+ *
+ * Attributes: type: Config type discriminator (always "signal-csv"). file_id: CSV
+ * file ID. signal_types: Types of signals to monitor. entity_type: Type of entity
+ * being monitored. primary_column: Primary column for entity names.
+ * monitoring_frequency: How often to check for signals. webhook_url: Webhook URL
+ * for completion notification.
+ */
+export interface SignalCsvConfigResponse {
+  /**
+   * Entity type
+   */
+  entity_type: SheetAPI.EntityType;
+
+  /**
+   * CSV file ID
+   */
+  file_id: string;
+
+  /**
+   * Monitoring frequency
+   */
+  monitoring_frequency: 'daily' | 'weekly' | 'monthly';
+
+  /**
+   * Primary column
+   */
+  primary_column: string;
+
+  /**
+   * Signal types
+   */
+  signal_types: Array<SignalTypeConfig>;
+
+  type?: 'signal-csv';
+
+  /**
+   * Webhook URL for completion notification
+   */
+  webhook_url?: string | null;
+}
+
+/**
  * Sheet-based signal monitoring configuration.
  *
  * Monitors signals for entities from an existing discovery ICP's sheet.
@@ -326,6 +483,52 @@ export interface SignalSheetConfig {
 
   /**
    * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
+ * Signal sheet configuration in API responses.
+ *
+ * Response model for sheet-based signal monitoring configs.
+ *
+ * Attributes: type: Config type discriminator (always "signal-sheet").
+ * source_icp_id: Source ICP ID containing entities to monitor. signal_types: Types
+ * of signals to monitor. entity_type: Type of entity being monitored.
+ * entity_filters: Optional MongoDB query to filter entities. monitoring_frequency:
+ * How often to check for signals. webhook_url: Webhook URL for completion
+ * notification.
+ */
+export interface SignalSheetConfigResponse {
+  /**
+   * Entity type
+   */
+  entity_type: SheetAPI.EntityType;
+
+  /**
+   * Monitoring frequency
+   */
+  monitoring_frequency: 'daily' | 'weekly' | 'monthly';
+
+  /**
+   * Signal types
+   */
+  signal_types: Array<SignalTypeConfig>;
+
+  /**
+   * Source ICP ID
+   */
+  source_icp_id: string;
+
+  /**
+   * Entity filters
+   */
+  entity_filters?: { [key: string]: unknown } | null;
+
+  type?: 'signal-sheet';
+
+  /**
+   * Webhook URL for completion notification
    */
   webhook_url?: string | null;
 }
@@ -392,6 +595,62 @@ export interface SignalTopicConfig {
 
   /**
    * Optional webhook URL to notify when workflow completes
+   */
+  webhook_url?: string | null;
+}
+
+/**
+ * Signal topic configuration in API responses.
+ *
+ * Response model for topic-based signal monitoring configs.
+ *
+ * Attributes: type: Config type discriminator (always "signal-topic").
+ * topic_criteria: Topic criteria for monitoring. signal_types: Types of signals to
+ * monitor. entity_type: Type of entity being monitored. monitoring_frequency: How
+ * often to check for signals. geographic_filters: Geographic regions to focus on.
+ * industry_filters: Industries to focus on. company_size_filters: Company size
+ * criteria. webhook_url: Webhook URL for completion notification.
+ */
+export interface SignalTopicConfigResponse {
+  /**
+   * Entity type
+   */
+  entity_type: SheetAPI.EntityType;
+
+  /**
+   * Monitoring frequency
+   */
+  monitoring_frequency: 'daily' | 'weekly' | 'monthly';
+
+  /**
+   * Signal types
+   */
+  signal_types: Array<SignalTypeConfig>;
+
+  /**
+   * Topic criteria
+   */
+  topic_criteria: string;
+
+  /**
+   * Size filters
+   */
+  company_size_filters?: Array<string> | null;
+
+  /**
+   * Geographic filters
+   */
+  geographic_filters?: Array<string> | null;
+
+  /**
+   * Industry filters
+   */
+  industry_filters?: Array<string> | null;
+
+  type?: 'signal-topic';
+
+  /**
+   * Webhook URL for completion notification
    */
   webhook_url?: string | null;
 }
@@ -497,249 +756,14 @@ export interface TaskCreateResponse {
    * Flow-specific task configuration
    */
   task_config?:
-    | TaskCreateResponse.SearchTaskConfigResponse
-    | TaskCreateResponse.IngestTaskConfigResponse
-    | TaskCreateResponse.ProfilePromptConfigResponse
-    | TaskCreateResponse.SignalTopicConfigResponse
-    | TaskCreateResponse.SignalCsvConfigResponse
-    | TaskCreateResponse.SignalSheetConfigResponse
+    | SearchTaskConfigResponse
+    | IngestTaskConfigResponse
+    | IngestPromptConfigResponse
+    | ProfilePromptConfigResponse
+    | SignalTopicConfigResponse
+    | SignalCsvConfigResponse
+    | SignalSheetConfigResponse
     | null;
-}
-
-export namespace TaskCreateResponse {
-  /**
-   * Search task configuration in API responses.
-   *
-   * Response model for search task configs that excludes backend-managed fields
-   * (version, config_type) from the API surface.
-   *
-   * Attributes: type: Config type discriminator (always "search").
-   * desired_contact_count: Number of contacts to find per company. user_feedback:
-   * Feedback to refine search behavior. webhook_url: Webhook URL for completion
-   * notification.
-   */
-  export interface SearchTaskConfigResponse {
-    /**
-     * Number of contacts to find per company
-     */
-    desired_contact_count: number;
-
-    /**
-     * Feedback to refine search behavior
-     */
-    user_feedback: string;
-
-    type?: 'search';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Ingest task configuration in API responses.
-   *
-   * Response model for CSV enrichment task configs that excludes backend-managed
-   * fields from the API surface.
-   *
-   * Attributes: type: Config type discriminator (always "ingest"). file_id: ID of
-   * the CSV file. primary_column: Column containing entity names. csv_entity_type:
-   * Entity type in CSV. webhook_url: Webhook URL for completion notification.
-   */
-  export interface IngestTaskConfigResponse {
-    /**
-     * Entity type in CSV
-     */
-    csv_entity_type: string;
-
-    /**
-     * ID of the CSV file
-     */
-    file_id: string;
-
-    /**
-     * Column containing entity names
-     */
-    primary_column: string;
-
-    type?: 'ingest';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Profile prompt configuration in API responses.
-   *
-   * Response model for profile prompt task configs that excludes backend-managed
-   * fields from the API surface.
-   *
-   * Attributes: type: Config type discriminator (always "profile"). prompt: Task
-   * prompt template. webhook_url: Webhook URL for completion notification.
-   */
-  export interface ProfilePromptConfigResponse {
-    /**
-     * Task prompt template
-     */
-    prompt: string;
-
-    type?: 'profile';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Signal topic configuration in API responses.
-   *
-   * Response model for topic-based signal monitoring configs.
-   *
-   * Attributes: type: Config type discriminator (always "signal-topic").
-   * topic_criteria: Topic criteria for monitoring. signal_types: Types of signals to
-   * monitor. entity_type: Type of entity being monitored. monitoring_frequency: How
-   * often to check for signals. geographic_filters: Geographic regions to focus on.
-   * industry_filters: Industries to focus on. company_size_filters: Company size
-   * criteria. webhook_url: Webhook URL for completion notification.
-   */
-  export interface SignalTopicConfigResponse {
-    /**
-     * Entity type
-     */
-    entity_type: SheetAPI.EntityType;
-
-    /**
-     * Monitoring frequency
-     */
-    monitoring_frequency: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Signal types
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * Topic criteria
-     */
-    topic_criteria: string;
-
-    /**
-     * Size filters
-     */
-    company_size_filters?: Array<string> | null;
-
-    /**
-     * Geographic filters
-     */
-    geographic_filters?: Array<string> | null;
-
-    /**
-     * Industry filters
-     */
-    industry_filters?: Array<string> | null;
-
-    type?: 'signal-topic';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Signal CSV configuration in API responses.
-   *
-   * Response model for CSV-based signal monitoring configs.
-   *
-   * Attributes: type: Config type discriminator (always "signal-csv"). file_id: CSV
-   * file ID. signal_types: Types of signals to monitor. entity_type: Type of entity
-   * being monitored. primary_column: Primary column for entity names.
-   * monitoring_frequency: How often to check for signals. webhook_url: Webhook URL
-   * for completion notification.
-   */
-  export interface SignalCsvConfigResponse {
-    /**
-     * Entity type
-     */
-    entity_type: SheetAPI.EntityType;
-
-    /**
-     * CSV file ID
-     */
-    file_id: string;
-
-    /**
-     * Monitoring frequency
-     */
-    monitoring_frequency: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Primary column
-     */
-    primary_column: string;
-
-    /**
-     * Signal types
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    type?: 'signal-csv';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Signal sheet configuration in API responses.
-   *
-   * Response model for sheet-based signal monitoring configs.
-   *
-   * Attributes: type: Config type discriminator (always "signal-sheet").
-   * source_icp_id: Source ICP ID containing entities to monitor. signal_types: Types
-   * of signals to monitor. entity_type: Type of entity being monitored.
-   * entity_filters: Optional MongoDB query to filter entities. monitoring_frequency:
-   * How often to check for signals. webhook_url: Webhook URL for completion
-   * notification.
-   */
-  export interface SignalSheetConfigResponse {
-    /**
-     * Entity type
-     */
-    entity_type: SheetAPI.EntityType;
-
-    /**
-     * Monitoring frequency
-     */
-    monitoring_frequency: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Signal types
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * Source ICP ID
-     */
-    source_icp_id: string;
-
-    /**
-     * Entity filters
-     */
-    entity_filters?: { [key: string]: unknown } | null;
-
-    type?: 'signal-sheet';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
 }
 
 /**
@@ -804,249 +828,14 @@ export interface TaskRetrieveResponse {
    * Flow-specific task configuration
    */
   task_config?:
-    | TaskRetrieveResponse.SearchTaskConfigResponse
-    | TaskRetrieveResponse.IngestTaskConfigResponse
-    | TaskRetrieveResponse.ProfilePromptConfigResponse
-    | TaskRetrieveResponse.SignalTopicConfigResponse
-    | TaskRetrieveResponse.SignalCsvConfigResponse
-    | TaskRetrieveResponse.SignalSheetConfigResponse
+    | SearchTaskConfigResponse
+    | IngestTaskConfigResponse
+    | IngestPromptConfigResponse
+    | ProfilePromptConfigResponse
+    | SignalTopicConfigResponse
+    | SignalCsvConfigResponse
+    | SignalSheetConfigResponse
     | null;
-}
-
-export namespace TaskRetrieveResponse {
-  /**
-   * Search task configuration in API responses.
-   *
-   * Response model for search task configs that excludes backend-managed fields
-   * (version, config_type) from the API surface.
-   *
-   * Attributes: type: Config type discriminator (always "search").
-   * desired_contact_count: Number of contacts to find per company. user_feedback:
-   * Feedback to refine search behavior. webhook_url: Webhook URL for completion
-   * notification.
-   */
-  export interface SearchTaskConfigResponse {
-    /**
-     * Number of contacts to find per company
-     */
-    desired_contact_count: number;
-
-    /**
-     * Feedback to refine search behavior
-     */
-    user_feedback: string;
-
-    type?: 'search';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Ingest task configuration in API responses.
-   *
-   * Response model for CSV enrichment task configs that excludes backend-managed
-   * fields from the API surface.
-   *
-   * Attributes: type: Config type discriminator (always "ingest"). file_id: ID of
-   * the CSV file. primary_column: Column containing entity names. csv_entity_type:
-   * Entity type in CSV. webhook_url: Webhook URL for completion notification.
-   */
-  export interface IngestTaskConfigResponse {
-    /**
-     * Entity type in CSV
-     */
-    csv_entity_type: string;
-
-    /**
-     * ID of the CSV file
-     */
-    file_id: string;
-
-    /**
-     * Column containing entity names
-     */
-    primary_column: string;
-
-    type?: 'ingest';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Profile prompt configuration in API responses.
-   *
-   * Response model for profile prompt task configs that excludes backend-managed
-   * fields from the API surface.
-   *
-   * Attributes: type: Config type discriminator (always "profile"). prompt: Task
-   * prompt template. webhook_url: Webhook URL for completion notification.
-   */
-  export interface ProfilePromptConfigResponse {
-    /**
-     * Task prompt template
-     */
-    prompt: string;
-
-    type?: 'profile';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Signal topic configuration in API responses.
-   *
-   * Response model for topic-based signal monitoring configs.
-   *
-   * Attributes: type: Config type discriminator (always "signal-topic").
-   * topic_criteria: Topic criteria for monitoring. signal_types: Types of signals to
-   * monitor. entity_type: Type of entity being monitored. monitoring_frequency: How
-   * often to check for signals. geographic_filters: Geographic regions to focus on.
-   * industry_filters: Industries to focus on. company_size_filters: Company size
-   * criteria. webhook_url: Webhook URL for completion notification.
-   */
-  export interface SignalTopicConfigResponse {
-    /**
-     * Entity type
-     */
-    entity_type: SheetAPI.EntityType;
-
-    /**
-     * Monitoring frequency
-     */
-    monitoring_frequency: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Signal types
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * Topic criteria
-     */
-    topic_criteria: string;
-
-    /**
-     * Size filters
-     */
-    company_size_filters?: Array<string> | null;
-
-    /**
-     * Geographic filters
-     */
-    geographic_filters?: Array<string> | null;
-
-    /**
-     * Industry filters
-     */
-    industry_filters?: Array<string> | null;
-
-    type?: 'signal-topic';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Signal CSV configuration in API responses.
-   *
-   * Response model for CSV-based signal monitoring configs.
-   *
-   * Attributes: type: Config type discriminator (always "signal-csv"). file_id: CSV
-   * file ID. signal_types: Types of signals to monitor. entity_type: Type of entity
-   * being monitored. primary_column: Primary column for entity names.
-   * monitoring_frequency: How often to check for signals. webhook_url: Webhook URL
-   * for completion notification.
-   */
-  export interface SignalCsvConfigResponse {
-    /**
-     * Entity type
-     */
-    entity_type: SheetAPI.EntityType;
-
-    /**
-     * CSV file ID
-     */
-    file_id: string;
-
-    /**
-     * Monitoring frequency
-     */
-    monitoring_frequency: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Primary column
-     */
-    primary_column: string;
-
-    /**
-     * Signal types
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    type?: 'signal-csv';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
-
-  /**
-   * Signal sheet configuration in API responses.
-   *
-   * Response model for sheet-based signal monitoring configs.
-   *
-   * Attributes: type: Config type discriminator (always "signal-sheet").
-   * source_icp_id: Source ICP ID containing entities to monitor. signal_types: Types
-   * of signals to monitor. entity_type: Type of entity being monitored.
-   * entity_filters: Optional MongoDB query to filter entities. monitoring_frequency:
-   * How often to check for signals. webhook_url: Webhook URL for completion
-   * notification.
-   */
-  export interface SignalSheetConfigResponse {
-    /**
-     * Entity type
-     */
-    entity_type: SheetAPI.EntityType;
-
-    /**
-     * Monitoring frequency
-     */
-    monitoring_frequency: 'daily' | 'weekly' | 'monthly';
-
-    /**
-     * Signal types
-     */
-    signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-    /**
-     * Source ICP ID
-     */
-    source_icp_id: string;
-
-    /**
-     * Entity filters
-     */
-    entity_filters?: { [key: string]: unknown } | null;
-
-    type?: 'signal-sheet';
-
-    /**
-     * Webhook URL for completion notification
-     */
-    webhook_url?: string | null;
-  }
 }
 
 /**
@@ -1140,249 +929,14 @@ export namespace TaskListResponse {
      * Flow-specific task configuration
      */
     task_config?:
-      | Task.SearchTaskConfigResponse
-      | Task.IngestTaskConfigResponse
-      | Task.ProfilePromptConfigResponse
-      | Task.SignalTopicConfigResponse
-      | Task.SignalCsvConfigResponse
-      | Task.SignalSheetConfigResponse
+      | TaskAPI.SearchTaskConfigResponse
+      | TaskAPI.IngestTaskConfigResponse
+      | TaskAPI.IngestPromptConfigResponse
+      | TaskAPI.ProfilePromptConfigResponse
+      | TaskAPI.SignalTopicConfigResponse
+      | TaskAPI.SignalCsvConfigResponse
+      | TaskAPI.SignalSheetConfigResponse
       | null;
-  }
-
-  export namespace Task {
-    /**
-     * Search task configuration in API responses.
-     *
-     * Response model for search task configs that excludes backend-managed fields
-     * (version, config_type) from the API surface.
-     *
-     * Attributes: type: Config type discriminator (always "search").
-     * desired_contact_count: Number of contacts to find per company. user_feedback:
-     * Feedback to refine search behavior. webhook_url: Webhook URL for completion
-     * notification.
-     */
-    export interface SearchTaskConfigResponse {
-      /**
-       * Number of contacts to find per company
-       */
-      desired_contact_count: number;
-
-      /**
-       * Feedback to refine search behavior
-       */
-      user_feedback: string;
-
-      type?: 'search';
-
-      /**
-       * Webhook URL for completion notification
-       */
-      webhook_url?: string | null;
-    }
-
-    /**
-     * Ingest task configuration in API responses.
-     *
-     * Response model for CSV enrichment task configs that excludes backend-managed
-     * fields from the API surface.
-     *
-     * Attributes: type: Config type discriminator (always "ingest"). file_id: ID of
-     * the CSV file. primary_column: Column containing entity names. csv_entity_type:
-     * Entity type in CSV. webhook_url: Webhook URL for completion notification.
-     */
-    export interface IngestTaskConfigResponse {
-      /**
-       * Entity type in CSV
-       */
-      csv_entity_type: string;
-
-      /**
-       * ID of the CSV file
-       */
-      file_id: string;
-
-      /**
-       * Column containing entity names
-       */
-      primary_column: string;
-
-      type?: 'ingest';
-
-      /**
-       * Webhook URL for completion notification
-       */
-      webhook_url?: string | null;
-    }
-
-    /**
-     * Profile prompt configuration in API responses.
-     *
-     * Response model for profile prompt task configs that excludes backend-managed
-     * fields from the API surface.
-     *
-     * Attributes: type: Config type discriminator (always "profile"). prompt: Task
-     * prompt template. webhook_url: Webhook URL for completion notification.
-     */
-    export interface ProfilePromptConfigResponse {
-      /**
-       * Task prompt template
-       */
-      prompt: string;
-
-      type?: 'profile';
-
-      /**
-       * Webhook URL for completion notification
-       */
-      webhook_url?: string | null;
-    }
-
-    /**
-     * Signal topic configuration in API responses.
-     *
-     * Response model for topic-based signal monitoring configs.
-     *
-     * Attributes: type: Config type discriminator (always "signal-topic").
-     * topic_criteria: Topic criteria for monitoring. signal_types: Types of signals to
-     * monitor. entity_type: Type of entity being monitored. monitoring_frequency: How
-     * often to check for signals. geographic_filters: Geographic regions to focus on.
-     * industry_filters: Industries to focus on. company_size_filters: Company size
-     * criteria. webhook_url: Webhook URL for completion notification.
-     */
-    export interface SignalTopicConfigResponse {
-      /**
-       * Entity type
-       */
-      entity_type: SheetAPI.EntityType;
-
-      /**
-       * Monitoring frequency
-       */
-      monitoring_frequency: 'daily' | 'weekly' | 'monthly';
-
-      /**
-       * Signal types
-       */
-      signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-      /**
-       * Topic criteria
-       */
-      topic_criteria: string;
-
-      /**
-       * Size filters
-       */
-      company_size_filters?: Array<string> | null;
-
-      /**
-       * Geographic filters
-       */
-      geographic_filters?: Array<string> | null;
-
-      /**
-       * Industry filters
-       */
-      industry_filters?: Array<string> | null;
-
-      type?: 'signal-topic';
-
-      /**
-       * Webhook URL for completion notification
-       */
-      webhook_url?: string | null;
-    }
-
-    /**
-     * Signal CSV configuration in API responses.
-     *
-     * Response model for CSV-based signal monitoring configs.
-     *
-     * Attributes: type: Config type discriminator (always "signal-csv"). file_id: CSV
-     * file ID. signal_types: Types of signals to monitor. entity_type: Type of entity
-     * being monitored. primary_column: Primary column for entity names.
-     * monitoring_frequency: How often to check for signals. webhook_url: Webhook URL
-     * for completion notification.
-     */
-    export interface SignalCsvConfigResponse {
-      /**
-       * Entity type
-       */
-      entity_type: SheetAPI.EntityType;
-
-      /**
-       * CSV file ID
-       */
-      file_id: string;
-
-      /**
-       * Monitoring frequency
-       */
-      monitoring_frequency: 'daily' | 'weekly' | 'monthly';
-
-      /**
-       * Primary column
-       */
-      primary_column: string;
-
-      /**
-       * Signal types
-       */
-      signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-      type?: 'signal-csv';
-
-      /**
-       * Webhook URL for completion notification
-       */
-      webhook_url?: string | null;
-    }
-
-    /**
-     * Signal sheet configuration in API responses.
-     *
-     * Response model for sheet-based signal monitoring configs.
-     *
-     * Attributes: type: Config type discriminator (always "signal-sheet").
-     * source_icp_id: Source ICP ID containing entities to monitor. signal_types: Types
-     * of signals to monitor. entity_type: Type of entity being monitored.
-     * entity_filters: Optional MongoDB query to filter entities. monitoring_frequency:
-     * How often to check for signals. webhook_url: Webhook URL for completion
-     * notification.
-     */
-    export interface SignalSheetConfigResponse {
-      /**
-       * Entity type
-       */
-      entity_type: SheetAPI.EntityType;
-
-      /**
-       * Monitoring frequency
-       */
-      monitoring_frequency: 'daily' | 'weekly' | 'monthly';
-
-      /**
-       * Signal types
-       */
-      signal_types: Array<TaskAPI.SignalTypeConfig>;
-
-      /**
-       * Source ICP ID
-       */
-      source_icp_id: string;
-
-      /**
-       * Entity filters
-       */
-      entity_filters?: { [key: string]: unknown } | null;
-
-      type?: 'signal-sheet';
-
-      /**
-       * Webhook URL for completion notification
-       */
-      webhook_url?: string | null;
-    }
   }
 }
 
@@ -1533,12 +1087,19 @@ export interface TaskExecuteParams {
 
 export declare namespace Task {
   export {
+    type IngestPromptConfigResponse as IngestPromptConfigResponse,
     type IngestTaskConfig as IngestTaskConfig,
+    type IngestTaskConfigResponse as IngestTaskConfigResponse,
     type ProfilePromptConfig as ProfilePromptConfig,
+    type ProfilePromptConfigResponse as ProfilePromptConfigResponse,
     type SearchTaskConfig as SearchTaskConfig,
+    type SearchTaskConfigResponse as SearchTaskConfigResponse,
     type SignalCsvConfig as SignalCsvConfig,
+    type SignalCsvConfigResponse as SignalCsvConfigResponse,
     type SignalSheetConfig as SignalSheetConfig,
+    type SignalSheetConfigResponse as SignalSheetConfigResponse,
     type SignalTopicConfig as SignalTopicConfig,
+    type SignalTopicConfigResponse as SignalTopicConfigResponse,
     type SignalTypeConfig as SignalTypeConfig,
     type TaskCreateResponse as TaskCreateResponse,
     type TaskRetrieveResponse as TaskRetrieveResponse,
