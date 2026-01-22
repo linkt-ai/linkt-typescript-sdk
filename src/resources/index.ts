@@ -1,6 +1,22 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
+  Entity,
+  type EntityResponse,
+  type EntityType,
+  type EntityListResponse,
+  type EntityBulkUpdateStatusResponse,
+  type EntityExportResponse,
+  type EntityGetCountsResponse,
+  type EntitySearchResponse,
+  type EntityUpdateParams,
+  type EntityListParams,
+  type EntityBulkUpdateStatusParams,
+  type EntityExportParams,
+  type EntityGetCountsParams,
+  type EntitySearchParams,
+} from './entity';
+export {
   Files,
   type CsvProcessingStatus,
   type FileRetrieveResponse,

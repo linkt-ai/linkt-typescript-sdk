@@ -32,8 +32,6 @@ Methods:
 - <code title="get /v1/sheet">client.sheet.<a href="./src/resources/sheet/sheet.ts">list</a>({ ...params }) -> SheetListResponse</code>
 - <code title="delete /v1/sheet/{sheet_id}">client.sheet.<a href="./src/resources/sheet/sheet.ts">delete</a>(sheetID) -> void</code>
 
-## Entity
-
 ## Schema
 
 Types:
@@ -49,6 +47,29 @@ Methods:
 - <code title="get /v1/sheet/schema/{sheet_id}">client.sheet.schema.<a href="./src/resources/sheet/schema.ts">get</a>(sheetID) -> SchemaGetResponse</code>
 - <code title="get /v1/sheet/schema/default">client.sheet.schema.<a href="./src/resources/sheet/schema.ts">getDefault</a>() -> SchemaGetDefaultResponse</code>
 - <code title="get /v1/sheet/schema/field">client.sheet.schema.<a href="./src/resources/sheet/schema.ts">getFieldDefinitions</a>() -> SchemaGetFieldDefinitionsResponse</code>
+
+# Entity
+
+Types:
+
+- <code><a href="./src/resources/entity.ts">EntityResponse</a></code>
+- <code><a href="./src/resources/entity.ts">EntityType</a></code>
+- <code><a href="./src/resources/entity.ts">EntityListResponse</a></code>
+- <code><a href="./src/resources/entity.ts">EntityBulkUpdateStatusResponse</a></code>
+- <code><a href="./src/resources/entity.ts">EntityExportResponse</a></code>
+- <code><a href="./src/resources/entity.ts">EntityGetCountsResponse</a></code>
+- <code><a href="./src/resources/entity.ts">EntitySearchResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/entity/{entity_id}">client.entity.<a href="./src/resources/entity.ts">retrieve</a>(entityID) -> EntityResponse</code>
+- <code title="put /v1/entity/{entity_id}">client.entity.<a href="./src/resources/entity.ts">update</a>(entityID, { ...params }) -> EntityResponse</code>
+- <code title="get /v1/entity">client.entity.<a href="./src/resources/entity.ts">list</a>({ ...params }) -> EntityListResponse</code>
+- <code title="delete /v1/entity/{entity_id}">client.entity.<a href="./src/resources/entity.ts">delete</a>(entityID) -> void</code>
+- <code title="patch /v1/entity/status/bulk">client.entity.<a href="./src/resources/entity.ts">bulkUpdateStatus</a>({ ...params }) -> EntityBulkUpdateStatusResponse</code>
+- <code title="get /v1/entity/export">client.entity.<a href="./src/resources/entity.ts">export</a>({ ...params }) -> unknown</code>
+- <code title="get /v1/entity/counts">client.entity.<a href="./src/resources/entity.ts">getCounts</a>({ ...params }) -> EntityGetCountsResponse</code>
+- <code title="get /v1/entity/search">client.entity.<a href="./src/resources/entity.ts">search</a>({ ...params }) -> EntitySearchResponse</code>
 
 # Task
 

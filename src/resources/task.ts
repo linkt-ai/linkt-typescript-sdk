@@ -2,7 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import * as TaskAPI from './task';
-import * as SheetAPI from './sheet/sheet';
+import * as EntityAPI from './entity';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -255,7 +255,7 @@ export interface SignalCsvConfig {
   /**
    * Type of entity being monitored
    */
-  entity_type?: SheetAPI.EntityType;
+  entity_type?: EntityAPI.EntityType;
 
   /**
    * How often to check for new signals
@@ -312,7 +312,7 @@ export interface SignalSheetConfig {
   /**
    * Type of entity being monitored
    */
-  entity_type?: SheetAPI.EntityType;
+  entity_type?: EntityAPI.EntityType;
 
   /**
    * How often to check for new signals
@@ -368,7 +368,7 @@ export interface SignalTopicConfig {
   /**
    * Type of entity being monitored
    */
-  entity_type?: SheetAPI.EntityType;
+  entity_type?: EntityAPI.EntityType;
 
   /**
    * Geographic regions to focus on
@@ -636,7 +636,7 @@ export namespace TaskCreateResponse {
     /**
      * Entity type
      */
-    entity_type: SheetAPI.EntityType;
+    entity_type: EntityAPI.EntityType;
 
     /**
      * Monitoring frequency
@@ -691,7 +691,7 @@ export namespace TaskCreateResponse {
     /**
      * Entity type
      */
-    entity_type: SheetAPI.EntityType;
+    entity_type: EntityAPI.EntityType;
 
     /**
      * CSV file ID
@@ -737,7 +737,7 @@ export namespace TaskCreateResponse {
     /**
      * Entity type
      */
-    entity_type: SheetAPI.EntityType;
+    entity_type: EntityAPI.EntityType;
 
     /**
      * Monitoring frequency
@@ -969,7 +969,7 @@ export namespace TaskRetrieveResponse {
     /**
      * Entity type
      */
-    entity_type: SheetAPI.EntityType;
+    entity_type: EntityAPI.EntityType;
 
     /**
      * Monitoring frequency
@@ -1024,7 +1024,7 @@ export namespace TaskRetrieveResponse {
     /**
      * Entity type
      */
-    entity_type: SheetAPI.EntityType;
+    entity_type: EntityAPI.EntityType;
 
     /**
      * CSV file ID
@@ -1070,7 +1070,7 @@ export namespace TaskRetrieveResponse {
     /**
      * Entity type
      */
-    entity_type: SheetAPI.EntityType;
+    entity_type: EntityAPI.EntityType;
 
     /**
      * Monitoring frequency
@@ -1331,7 +1331,7 @@ export namespace TaskListResponse {
       /**
        * Entity type
        */
-      entity_type: SheetAPI.EntityType;
+      entity_type: EntityAPI.EntityType;
 
       /**
        * Monitoring frequency
@@ -1386,7 +1386,7 @@ export namespace TaskListResponse {
       /**
        * Entity type
        */
-      entity_type: SheetAPI.EntityType;
+      entity_type: EntityAPI.EntityType;
 
       /**
        * CSV file ID
@@ -1432,7 +1432,7 @@ export namespace TaskListResponse {
       /**
        * Entity type
        */
-      entity_type: SheetAPI.EntityType;
+      entity_type: EntityAPI.EntityType;
 
       /**
        * Monitoring frequency

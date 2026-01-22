@@ -11,11 +11,28 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
+import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import {
+  Entity,
+  EntityBulkUpdateStatusParams,
+  EntityBulkUpdateStatusResponse,
+  EntityExportParams,
+  EntityExportResponse,
+  EntityGetCountsParams,
+  EntityGetCountsResponse,
+  EntityListParams,
+  EntityListResponse,
+  EntityResponse,
+  EntitySearchParams,
+  EntitySearchResponse,
+  EntityType,
+  EntityUpdateParams,
+} from './resources/entity';
 import {
   CsvProcessingStatus,
   FileListParams,
@@ -65,7 +82,7 @@ import {
   TaskUpdateParams,
 } from './resources/task';
 import {
-  EntityType,
+  EntityType as SheetAPIEntityType,
   Sheet,
   SheetCreateParams,
   SheetListParams,
@@ -290,24 +307,8 @@ export class Linkt {
     return buildHeaders([{ 'x-api-key': this.apiKey }]);
   }
 
-  /**
-   * Basic re-implementation of `qs.stringify` for primitive types.
-   */
   protected stringifyQuery(query: Record<string, unknown>): string {
-    return Object.entries(query)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-        }
-        if (value === null) {
-          return `${encodeURIComponent(key)}=`;
-        }
-        throw new Errors.LinktError(
-          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
-        );
-      })
-      .join('&');
+    return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
   private getUserAgent(): string {
@@ -796,6 +797,7 @@ export class Linkt {
 
   icp: API.Icp = new API.Icp(this);
   sheet: API.SheetResource = new API.SheetResource(this);
+  entity: API.Entity = new API.Entity(this);
   task: API.Task = new API.Task(this);
   signal: API.Signal = new API.Signal(this);
   run: API.Run = new API.Run(this);
@@ -804,6 +806,7 @@ export class Linkt {
 
 Linkt.Icp = Icp;
 Linkt.SheetResource = SheetResource;
+Linkt.Entity = Entity;
 Linkt.Task = Task;
 Linkt.Signal = Signal;
 Linkt.Run = Run;
@@ -825,12 +828,29 @@ export declare namespace Linkt {
 
   export {
     SheetResource as SheetResource,
-    type EntityType as EntityType,
+    type SheetAPIEntityType as EntityType,
     type Sheet as Sheet,
     type SheetListResponse as SheetListResponse,
     type SheetCreateParams as SheetCreateParams,
     type SheetUpdateParams as SheetUpdateParams,
     type SheetListParams as SheetListParams,
+  };
+
+  export {
+    Entity as Entity,
+    type EntityResponse as EntityResponse,
+    type EntityType as EntityType,
+    type EntityListResponse as EntityListResponse,
+    type EntityBulkUpdateStatusResponse as EntityBulkUpdateStatusResponse,
+    type EntityExportResponse as EntityExportResponse,
+    type EntityGetCountsResponse as EntityGetCountsResponse,
+    type EntitySearchResponse as EntitySearchResponse,
+    type EntityUpdateParams as EntityUpdateParams,
+    type EntityListParams as EntityListParams,
+    type EntityBulkUpdateStatusParams as EntityBulkUpdateStatusParams,
+    type EntityExportParams as EntityExportParams,
+    type EntityGetCountsParams as EntityGetCountsParams,
+    type EntitySearchParams as EntitySearchParams,
   };
 
   export {
