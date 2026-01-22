@@ -30,7 +30,6 @@ import {
   EntityResponse,
   EntitySearchParams,
   EntitySearchResponse,
-  EntityType,
   EntityUpdateParams,
 } from './resources/entity';
 import {
@@ -64,12 +63,19 @@ import {
 } from './resources/run';
 import { Signal, SignalListParams, SignalListResponse, SignalResponse } from './resources/signal';
 import {
+  IngestPromptConfigResponse,
   IngestTaskConfig,
+  IngestTaskConfigResponse,
   ProfilePromptConfig,
+  ProfilePromptConfigResponse,
   SearchTaskConfig,
+  SearchTaskConfigResponse,
   SignalCsvConfig,
+  SignalCsvConfigResponse,
   SignalSheetConfig,
+  SignalSheetConfigResponse,
   SignalTopicConfig,
+  SignalTopicConfigResponse,
   SignalTypeConfig,
   Task,
   TaskCreateParams,
@@ -82,7 +88,7 @@ import {
   TaskUpdateParams,
 } from './resources/task';
 import {
-  EntityType as SheetAPIEntityType,
+  EntityType,
   Sheet,
   SheetCreateParams,
   SheetListParams,
@@ -828,7 +834,7 @@ export declare namespace Linkt {
 
   export {
     SheetResource as SheetResource,
-    type SheetAPIEntityType as EntityType,
+    type EntityType as EntityType,
     type Sheet as Sheet,
     type SheetListResponse as SheetListResponse,
     type SheetCreateParams as SheetCreateParams,
@@ -839,7 +845,6 @@ export declare namespace Linkt {
   export {
     Entity as Entity,
     type EntityResponse as EntityResponse,
-    type EntityType as EntityType,
     type EntityListResponse as EntityListResponse,
     type EntityBulkUpdateStatusResponse as EntityBulkUpdateStatusResponse,
     type EntityExportResponse as EntityExportResponse,
@@ -855,12 +860,19 @@ export declare namespace Linkt {
 
   export {
     Task as Task,
+    type IngestPromptConfigResponse as IngestPromptConfigResponse,
     type IngestTaskConfig as IngestTaskConfig,
+    type IngestTaskConfigResponse as IngestTaskConfigResponse,
     type ProfilePromptConfig as ProfilePromptConfig,
+    type ProfilePromptConfigResponse as ProfilePromptConfigResponse,
     type SearchTaskConfig as SearchTaskConfig,
+    type SearchTaskConfigResponse as SearchTaskConfigResponse,
     type SignalCsvConfig as SignalCsvConfig,
+    type SignalCsvConfigResponse as SignalCsvConfigResponse,
     type SignalSheetConfig as SignalSheetConfig,
+    type SignalSheetConfigResponse as SignalSheetConfigResponse,
     type SignalTopicConfig as SignalTopicConfig,
+    type SignalTopicConfigResponse as SignalTopicConfigResponse,
     type SignalTypeConfig as SignalTypeConfig,
     type TaskCreateResponse as TaskCreateResponse,
     type TaskRetrieveResponse as TaskRetrieveResponse,

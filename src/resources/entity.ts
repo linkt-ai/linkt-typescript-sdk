@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as SheetAPI from './sheet/sheet';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -243,11 +244,6 @@ export interface EntityResponse {
 }
 
 /**
- * Valid entity types for sheets.
- */
-export type EntityType = 'company' | 'person' | 'job_board' | 'school_district' | 'product';
-
-/**
  * Paginated list response for entities.
  *
  * All entities include enrichment fields (sheet_name, entity_type, icp_id) to
@@ -356,7 +352,7 @@ export interface EntityListParams {
   /**
    * Valid entity types for sheets.
    */
-  entity_type?: EntityType | null;
+  entity_type?: SheetAPI.EntityType | null;
 
   /**
    * Filter by ICP ID
@@ -405,7 +401,7 @@ export interface EntityExportParams {
   /**
    * Valid entity types for sheets.
    */
-  entity_type?: EntityType | null;
+  entity_type?: SheetAPI.EntityType | null;
 
   /**
    * Export format: 'separate' (default) or 'combined' (joined parent-child rows)
@@ -449,7 +445,7 @@ export interface EntitySearchParams {
   /**
    * Valid entity types for sheets.
    */
-  entity_type?: EntityType | null;
+  entity_type?: SheetAPI.EntityType | null;
 
   /**
    * Filter by ICP ID
@@ -480,7 +476,6 @@ export interface EntitySearchParams {
 export declare namespace Entity {
   export {
     type EntityResponse as EntityResponse,
-    type EntityType as EntityType,
     type EntityListResponse as EntityListResponse,
     type EntityBulkUpdateStatusResponse as EntityBulkUpdateStatusResponse,
     type EntityExportResponse as EntityExportResponse,

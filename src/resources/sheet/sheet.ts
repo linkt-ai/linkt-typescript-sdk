@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as EntityAPI from '../entity';
 import * as SchemaAPI from './schema';
 import {
   Schema,
@@ -122,7 +121,7 @@ export interface SheetCreateParams {
   /**
    * Type of entities to store
    */
-  entity_type: EntityAPI.EntityType;
+  entity_type: EntityType;
 
   /**
    * ICP this sheet belongs to

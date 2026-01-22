@@ -53,7 +53,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/entity.ts">EntityResponse</a></code>
-- <code><a href="./src/resources/entity.ts">EntityType</a></code>
 - <code><a href="./src/resources/entity.ts">EntityListResponse</a></code>
 - <code><a href="./src/resources/entity.ts">EntityBulkUpdateStatusResponse</a></code>
 - <code><a href="./src/resources/entity.ts">EntityExportResponse</a></code>
@@ -75,12 +74,19 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/task.ts">IngestPromptConfigResponse</a></code>
 - <code><a href="./src/resources/task.ts">IngestTaskConfig</a></code>
+- <code><a href="./src/resources/task.ts">IngestTaskConfigResponse</a></code>
 - <code><a href="./src/resources/task.ts">ProfilePromptConfig</a></code>
+- <code><a href="./src/resources/task.ts">ProfilePromptConfigResponse</a></code>
 - <code><a href="./src/resources/task.ts">SearchTaskConfig</a></code>
+- <code><a href="./src/resources/task.ts">SearchTaskConfigResponse</a></code>
 - <code><a href="./src/resources/task.ts">SignalCsvConfig</a></code>
+- <code><a href="./src/resources/task.ts">SignalCsvConfigResponse</a></code>
 - <code><a href="./src/resources/task.ts">SignalSheetConfig</a></code>
+- <code><a href="./src/resources/task.ts">SignalSheetConfigResponse</a></code>
 - <code><a href="./src/resources/task.ts">SignalTopicConfig</a></code>
+- <code><a href="./src/resources/task.ts">SignalTopicConfigResponse</a></code>
 - <code><a href="./src/resources/task.ts">SignalTypeConfig</a></code>
 - <code><a href="./src/resources/task.ts">TaskCreateResponse</a></code>
 - <code><a href="./src/resources/task.ts">TaskRetrieveResponse</a></code>
