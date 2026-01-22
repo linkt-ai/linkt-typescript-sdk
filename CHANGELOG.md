@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.4.0 (2026-01-22)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** api update ([88d02e3](https://github.com/linkt-ai/linkt-typescript-sdk/commit/88d02e31aa49d13144debea6a031a1669b6cc102))
+* **api:** api update ([83ef8ff](https://github.com/linkt-ai/linkt-typescript-sdk/commit/83ef8fffe0b35e6a4403fea075c3062836b2720d))
+* **api:** api update ([32b6263](https://github.com/linkt-ai/linkt-typescript-sdk/commit/32b626323ae2862406e2a4487741dffed2169c29))
+* **api:** clear entity model ([3a06191](https://github.com/linkt-ai/linkt-typescript-sdk/commit/3a06191ac15333285a19ccf28d031bee097d33a8))
+* **api:** manual update ([d56ab15](https://github.com/linkt-ai/linkt-typescript-sdk/commit/d56ab1562edec445f4deb51c8f81da3ae4478526))
+
+
+### Chores
+
+* fix typo in descriptions ([2a953de](https://github.com/linkt-ai/linkt-typescript-sdk/commit/2a953de4860c9654a9030db6287f99def6d213bd))
+* **internal:** update `actions/checkout` version ([7bf74ea](https://github.com/linkt-ai/linkt-typescript-sdk/commit/7bf74eaf23382fb37acae8c8449f61d86c9360cd))
+* **internal:** update lock file ([b29d4c5](https://github.com/linkt-ai/linkt-typescript-sdk/commit/b29d4c50a63bb6a3e610a0e751e6526476d9bf4a))
+* **internal:** upgrade babel, qs, js-yaml ([d5c6bd8](https://github.com/linkt-ai/linkt-typescript-sdk/commit/d5c6bd87ab459b5c8c29b5dd528b87692e09ca3b))
+* **internal:** upgrade brace-expansion and @babel/helpers ([d4e21d5](https://github.com/linkt-ai/linkt-typescript-sdk/commit/d4e21d5d813ce907c348efca0d8b2943f8afab17))
+
 ## 0.3.0 (2026-01-09)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.2.0...v0.3.0)
