@@ -1,8 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as EntityAPI from './entity';
-import { Entity } from './entity';
+import * as EntityAPI from '../entity';
 import * as SchemaAPI from './schema';
 import {
   Schema,
@@ -18,7 +17,6 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class SheetResource extends APIResource {
-  entity: EntityAPI.Entity = new EntityAPI.Entity(this._client);
   schema: SchemaAPI.Schema = new SchemaAPI.Schema(this._client);
 
   /**
@@ -124,7 +122,7 @@ export interface SheetCreateParams {
   /**
    * Type of entities to store
    */
-  entity_type: EntityType;
+  entity_type: EntityAPI.EntityType;
 
   /**
    * ICP this sheet belongs to
@@ -162,7 +160,6 @@ export interface SheetListParams {
   sort_by?: string | null;
 }
 
-SheetResource.Entity = Entity;
 SheetResource.Schema = Schema;
 
 export declare namespace SheetResource {
@@ -174,8 +171,6 @@ export declare namespace SheetResource {
     type SheetUpdateParams as SheetUpdateParams,
     type SheetListParams as SheetListParams,
   };
-
-  export { Entity as Entity };
 
   export {
     Schema as Schema,
