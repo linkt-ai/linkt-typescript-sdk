@@ -254,7 +254,14 @@ export interface EntityResponse {
   parent_id?: string | null;
 
   /**
-   * Workflow status (new, reviewed, passed, contacted)
+   * Status values for entity workflow tracking.
+   *
+   * Transitions are user-driven (not automatic state machine):
+   *
+   * - new: Default for all newly created entities
+   * - reviewed: User has examined the entity
+   * - passed: Entity has been approved/qualified
+   * - contacted: Outreach has been initiated
    */
   status?: 'new' | 'reviewed' | 'passed' | 'contacted' | null;
 }
@@ -429,7 +436,14 @@ export interface EntityUpdateParams {
   comments?: string | null;
 
   /**
-   * Update workflow status (new, reviewed, passed, contacted)
+   * Status values for entity workflow tracking.
+   *
+   * Transitions are user-driven (not automatic state machine):
+   *
+   * - new: Default for all newly created entities
+   * - reviewed: User has examined the entity
+   * - passed: Entity has been approved/qualified
+   * - contacted: Outreach has been initiated
    */
   status?: 'new' | 'reviewed' | 'passed' | 'contacted' | null;
 }
