@@ -51,6 +51,7 @@ describe('resource entity', () => {
       client.entity.list(
         {
           entity_type: 'company',
+          hide_duplicates: true,
           icp_id: 'icp_id',
           page: 1,
           page_size: 1,
@@ -158,6 +159,7 @@ describe('resource entity', () => {
     const response = await client.entity.search({
       q: 'x',
       entity_type: 'company',
+      hide_duplicates: true,
       icp_id: 'icp_id',
       page: 1,
       page_size: 1,
