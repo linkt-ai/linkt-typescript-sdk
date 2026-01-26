@@ -11,8 +11,8 @@ export class Entity extends APIResource {
   /**
    * Get a single entity by ID with enrichment.
    *
-   * Returns the entity with sheet_name, entity_type, and icp_id populated from the
-   * parent sheet.
+   * Returns the entity with sheet_name, entity_type, icp_id, and duplicate_info
+   * populated. duplicate_info is null if the entity has no duplicates across ICPs.
    */
   retrieve(entityID: string, options?: RequestOptions): APIPromise<EntityResponse> {
     return this._client.get(path`/v1/entity/${entityID}`, options);
@@ -41,6 +41,7 @@ export class Entity extends APIResource {
    * - status: Filter by workflow status (supports multiple:
    *   ?status=new&status=reviewed) Valid values: new, reviewed, passed, contacted,
    *   null
+   * - hide_duplicates: When true, only show primary entities (filter out duplicates)
    *
    * All results include enrichment fields for UI annotations.
    */
@@ -173,6 +174,7 @@ export class Entity extends APIResource {
    * - status: Filter by workflow status (supports multiple:
    *   ?status=new&status=reviewed) Valid values: new, reviewed, passed, contacted,
    *   null
+   * - hide_duplicates: When true, only show primary entities
    */
   search(query: EntitySearchParams, options?: RequestOptions): APIPromise<EntitySearchResponse> {
     return this._client.get('/v1/entity/search', { query, ...options });
@@ -233,14 +235,99 @@ export interface EntityResponse {
   comments?: string | null;
 
   /**
+   * Duplicate status information for an entity.
+   *
+   * Indicates whether an entity is part of a duplicate group and its role:
+   *
+   * - Primary entities: is_primary=True, has duplicate_entity_ids and duplicate_icps
+   * - Duplicate entities: is_duplicate=True, has primary_entity_id and
+   *   primary_icp_name
+   *
+   * For entities that have no duplicates, this field will be None/null in the
+   * EntityResponse.
+   */
+  duplicate_info?: EntityResponse.DuplicateInfo | null;
+
+  /**
    * Parent entity ID (for hierarchical entities)
    */
   parent_id?: string | null;
 
   /**
-   * Entity workflow status: new, reviewed, passed, contacted, or null
+   * Workflow status (new, reviewed, passed, contacted)
    */
-  status?: string | null;
+  status?: 'new' | 'reviewed' | 'passed' | 'contacted' | null;
+}
+
+export namespace EntityResponse {
+  /**
+   * Duplicate status information for an entity.
+   *
+   * Indicates whether an entity is part of a duplicate group and its role:
+   *
+   * - Primary entities: is_primary=True, has duplicate_entity_ids and duplicate_icps
+   * - Duplicate entities: is_duplicate=True, has primary_entity_id and
+   *   primary_icp_name
+   *
+   * For entities that have no duplicates, this field will be None/null in the
+   * EntityResponse.
+   */
+  export interface DuplicateInfo {
+    /**
+     * Whether this entity is a duplicate (not the primary)
+     */
+    is_duplicate: boolean;
+
+    /**
+     * Whether this entity is the primary in a duplicate group
+     */
+    is_primary: boolean;
+
+    /**
+     * Number of duplicate entities (primary only)
+     */
+    duplicate_count?: number | null;
+
+    /**
+     * IDs of duplicate entities (primary only)
+     */
+    duplicate_entity_ids?: Array<string> | null;
+
+    /**
+     * ICPs containing duplicates (primary only)
+     */
+    duplicate_icps?: Array<DuplicateInfo.DuplicateIcp> | null;
+
+    /**
+     * ID of the primary entity (duplicate only)
+     */
+    primary_entity_id?: string | null;
+
+    /**
+     * ICP name of the primary entity (duplicate only)
+     */
+    primary_icp_name?: string | null;
+  }
+
+  export namespace DuplicateInfo {
+    /**
+     * Info about an ICP containing a duplicate entity.
+     *
+     * Used in DuplicateInfo to show which ICPs contain duplicate instances of the same
+     * entity.
+     */
+    export interface DuplicateIcp {
+      /**
+       * ICP ID
+       */
+      icp_id: string;
+
+      /**
+       * ICP name
+       */
+      icp_name: string;
+    }
+  }
 }
 
 /**
@@ -342,10 +429,9 @@ export interface EntityUpdateParams {
   comments?: string | null;
 
   /**
-   * Update workflow status: new, reviewed, passed, contacted, or null. Use explicit
-   * null to clear status.
+   * Update workflow status (new, reviewed, passed, contacted)
    */
-  status?: string | null;
+  status?: 'new' | 'reviewed' | 'passed' | 'contacted' | null;
 }
 
 export interface EntityListParams {
@@ -353,6 +439,11 @@ export interface EntityListParams {
    * Valid entity types for sheets.
    */
   entity_type?: SheetAPI.EntityType | null;
+
+  /**
+   * Hide duplicate entities (show only primaries)
+   */
+  hide_duplicates?: boolean;
 
   /**
    * Filter by ICP ID
@@ -446,6 +537,11 @@ export interface EntitySearchParams {
    * Valid entity types for sheets.
    */
   entity_type?: SheetAPI.EntityType | null;
+
+  /**
+   * Hide duplicate entities (show only primaries)
+   */
+  hide_duplicates?: boolean;
 
   /**
    * Filter by ICP ID
