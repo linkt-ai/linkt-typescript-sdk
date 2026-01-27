@@ -19,12 +19,17 @@ export class Entity extends APIResource {
   }
 
   /**
-   * Update entity status or comments.
+   * Update entity status or comments with optional propagation.
    *
    * Only status and comments can be updated via this endpoint. Use status=null to
    * clear status, comments=null to clear comments.
    *
    * Status must be one of: new, reviewed, passed, contacted, or null.
+   *
+   * Propagation flags control cascading updates:
+   *
+   * - propagate_to_family: Update parent/child entities (default: True)
+   * - propagate_to_duplicates: Update duplicate entities across ICPs (default: True)
    */
   update(entityID: string, body: EntityUpdateParams, options?: RequestOptions): APIPromise<EntityResponse> {
     return this._client.put(path`/v1/entity/${entityID}`, { body, ...options });
@@ -65,7 +70,7 @@ export class Entity extends APIResource {
   }
 
   /**
-   * Update status for multiple entities at once.
+   * Update status for multiple entities at once with optional propagation.
    *
    * Accepts a list of entity IDs and a status value. The status can be:
    *
@@ -75,10 +80,14 @@ export class Entity extends APIResource {
    * Returns the count of successfully updated entities and any failed IDs. Entities
    * may fail to update if they have an invalid ID format or don't exist.
    *
+   * Propagation flags control cascading updates:
+   *
+   * - propagate_to_family: Update parent/child of each entity (default: True)
+   * - propagate_to_duplicates: Update duplicate entities across ICPs (default: True)
+   *
    * WHY: Bulk operations enable users to update status for many entities at once
    * (e.g., mark all search results as "reviewed"), improving workflow efficiency
-   * versus N individual PUT calls. Uses batch_update_by_filter for single database
-   * roundtrip efficiency.
+   * versus N individual PUT calls.
    */
   bulkUpdateStatus(
     body: EntityBulkUpdateStatusParams,
@@ -436,6 +445,16 @@ export interface EntityUpdateParams {
   comments?: string | null;
 
   /**
+   * Reflect updates to duplicate entities across ICPs (default: True)
+   */
+  propagate_to_duplicates?: boolean;
+
+  /**
+   * Reflect updates to parent/child entities (default: True)
+   */
+  propagate_to_family?: boolean;
+
+  /**
    * Status values for entity workflow tracking.
    *
    * Transitions are user-driven (not automatic state machine):
@@ -495,6 +514,16 @@ export interface EntityBulkUpdateStatusParams {
    * New status value: new, reviewed, passed, contacted, or null to clear
    */
   status: string | null;
+
+  /**
+   * Reflect status to duplicate entities across ICPs (default: True)
+   */
+  propagate_to_duplicates?: boolean;
+
+  /**
+   * Reflect status to parent/child of each entity (default: True)
+   */
+  propagate_to_family?: boolean;
 }
 
 export interface EntityExportParams {

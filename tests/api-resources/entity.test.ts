@@ -89,7 +89,12 @@ describe('resource entity', () => {
 
   // Prism tests are disabled
   test.skip('bulkUpdateStatus: required and optional params', async () => {
-    const response = await client.entity.bulkUpdateStatus({ entity_ids: ['string'], status: 'status' });
+    const response = await client.entity.bulkUpdateStatus({
+      entity_ids: ['string'],
+      status: 'status',
+      propagate_to_duplicates: true,
+      propagate_to_family: true,
+    });
   });
 
   // Prism tests are disabled
