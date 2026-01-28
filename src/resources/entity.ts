@@ -11,20 +11,25 @@ export class Entity extends APIResource {
   /**
    * Get a single entity by ID with enrichment.
    *
-   * Returns the entity with sheet_name, entity_type, and icp_id populated from the
-   * parent sheet.
+   * Returns the entity with sheet_name, entity_type, icp_id, and duplicate_info
+   * populated. duplicate_info is null if the entity has no duplicates across ICPs.
    */
   retrieve(entityID: string, options?: RequestOptions): APIPromise<EntityResponse> {
     return this._client.get(path`/v1/entity/${entityID}`, options);
   }
 
   /**
-   * Update entity status or comments.
+   * Update entity status or comments with optional propagation.
    *
    * Only status and comments can be updated via this endpoint. Use status=null to
    * clear status, comments=null to clear comments.
    *
    * Status must be one of: new, reviewed, passed, contacted, or null.
+   *
+   * Propagation flags control cascading updates:
+   *
+   * - propagate_to_family: Update parent/child entities (default: True)
+   * - propagate_to_duplicates: Update duplicate entities across ICPs (default: True)
    */
   update(entityID: string, body: EntityUpdateParams, options?: RequestOptions): APIPromise<EntityResponse> {
     return this._client.put(path`/v1/entity/${entityID}`, { body, ...options });
@@ -41,6 +46,7 @@ export class Entity extends APIResource {
    * - status: Filter by workflow status (supports multiple:
    *   ?status=new&status=reviewed) Valid values: new, reviewed, passed, contacted,
    *   null
+   * - hide_duplicates: When true, only show primary entities (filter out duplicates)
    *
    * All results include enrichment fields for UI annotations.
    */
@@ -64,7 +70,7 @@ export class Entity extends APIResource {
   }
 
   /**
-   * Update status for multiple entities at once.
+   * Update status for multiple entities at once with optional propagation.
    *
    * Accepts a list of entity IDs and a status value. The status can be:
    *
@@ -74,10 +80,14 @@ export class Entity extends APIResource {
    * Returns the count of successfully updated entities and any failed IDs. Entities
    * may fail to update if they have an invalid ID format or don't exist.
    *
+   * Propagation flags control cascading updates:
+   *
+   * - propagate_to_family: Update parent/child of each entity (default: True)
+   * - propagate_to_duplicates: Update duplicate entities across ICPs (default: True)
+   *
    * WHY: Bulk operations enable users to update status for many entities at once
    * (e.g., mark all search results as "reviewed"), improving workflow efficiency
-   * versus N individual PUT calls. Uses batch_update_by_filter for single database
-   * roundtrip efficiency.
+   * versus N individual PUT calls.
    */
   bulkUpdateStatus(
     body: EntityBulkUpdateStatusParams,
@@ -173,6 +183,7 @@ export class Entity extends APIResource {
    * - status: Filter by workflow status (supports multiple:
    *   ?status=new&status=reviewed) Valid values: new, reviewed, passed, contacted,
    *   null
+   * - hide_duplicates: When true, only show primary entities
    */
   search(query: EntitySearchParams, options?: RequestOptions): APIPromise<EntitySearchResponse> {
     return this._client.get('/v1/entity/search', { query, ...options });
@@ -233,14 +244,106 @@ export interface EntityResponse {
   comments?: string | null;
 
   /**
+   * Duplicate status information for an entity.
+   *
+   * Indicates whether an entity is part of a duplicate group and its role:
+   *
+   * - Primary entities: is_primary=True, has duplicate_entity_ids and duplicate_icps
+   * - Duplicate entities: is_duplicate=True, has primary_entity_id and
+   *   primary_icp_name
+   *
+   * For entities that have no duplicates, this field will be None/null in the
+   * EntityResponse.
+   */
+  duplicate_info?: EntityResponse.DuplicateInfo | null;
+
+  /**
    * Parent entity ID (for hierarchical entities)
    */
   parent_id?: string | null;
 
   /**
-   * Entity workflow status: new, reviewed, passed, contacted, or null
+   * Status values for entity workflow tracking.
+   *
+   * Transitions are user-driven (not automatic state machine):
+   *
+   * - new: Default for all newly created entities
+   * - reviewed: User has examined the entity
+   * - passed: Entity has been approved/qualified
+   * - contacted: Outreach has been initiated
    */
-  status?: string | null;
+  status?: 'new' | 'reviewed' | 'passed' | 'contacted' | null;
+}
+
+export namespace EntityResponse {
+  /**
+   * Duplicate status information for an entity.
+   *
+   * Indicates whether an entity is part of a duplicate group and its role:
+   *
+   * - Primary entities: is_primary=True, has duplicate_entity_ids and duplicate_icps
+   * - Duplicate entities: is_duplicate=True, has primary_entity_id and
+   *   primary_icp_name
+   *
+   * For entities that have no duplicates, this field will be None/null in the
+   * EntityResponse.
+   */
+  export interface DuplicateInfo {
+    /**
+     * Whether this entity is a duplicate (not the primary)
+     */
+    is_duplicate: boolean;
+
+    /**
+     * Whether this entity is the primary in a duplicate group
+     */
+    is_primary: boolean;
+
+    /**
+     * Number of duplicate entities (primary only)
+     */
+    duplicate_count?: number | null;
+
+    /**
+     * IDs of duplicate entities (primary only)
+     */
+    duplicate_entity_ids?: Array<string> | null;
+
+    /**
+     * ICPs containing duplicates (primary only)
+     */
+    duplicate_icps?: Array<DuplicateInfo.DuplicateIcp> | null;
+
+    /**
+     * ID of the primary entity (duplicate only)
+     */
+    primary_entity_id?: string | null;
+
+    /**
+     * ICP name of the primary entity (duplicate only)
+     */
+    primary_icp_name?: string | null;
+  }
+
+  export namespace DuplicateInfo {
+    /**
+     * Info about an ICP containing a duplicate entity.
+     *
+     * Used in DuplicateInfo to show which ICPs contain duplicate instances of the same
+     * entity.
+     */
+    export interface DuplicateIcp {
+      /**
+       * ICP ID
+       */
+      icp_id: string;
+
+      /**
+       * ICP name
+       */
+      icp_name: string;
+    }
+  }
 }
 
 /**
@@ -342,10 +445,26 @@ export interface EntityUpdateParams {
   comments?: string | null;
 
   /**
-   * Update workflow status: new, reviewed, passed, contacted, or null. Use explicit
-   * null to clear status.
+   * Reflect updates to duplicate entities across ICPs (default: True)
    */
-  status?: string | null;
+  propagate_to_duplicates?: boolean;
+
+  /**
+   * Reflect updates to parent/child entities (default: True)
+   */
+  propagate_to_family?: boolean;
+
+  /**
+   * Status values for entity workflow tracking.
+   *
+   * Transitions are user-driven (not automatic state machine):
+   *
+   * - new: Default for all newly created entities
+   * - reviewed: User has examined the entity
+   * - passed: Entity has been approved/qualified
+   * - contacted: Outreach has been initiated
+   */
+  status?: 'new' | 'reviewed' | 'passed' | 'contacted' | null;
 }
 
 export interface EntityListParams {
@@ -353,6 +472,11 @@ export interface EntityListParams {
    * Valid entity types for sheets.
    */
   entity_type?: SheetAPI.EntityType | null;
+
+  /**
+   * Hide duplicate entities (show only primaries)
+   */
+  hide_duplicates?: boolean;
 
   /**
    * Filter by ICP ID
@@ -390,6 +514,16 @@ export interface EntityBulkUpdateStatusParams {
    * New status value: new, reviewed, passed, contacted, or null to clear
    */
   status: string | null;
+
+  /**
+   * Reflect status to duplicate entities across ICPs (default: True)
+   */
+  propagate_to_duplicates?: boolean;
+
+  /**
+   * Reflect status to parent/child of each entity (default: True)
+   */
+  propagate_to_family?: boolean;
 }
 
 export interface EntityExportParams {
@@ -446,6 +580,11 @@ export interface EntitySearchParams {
    * Valid entity types for sheets.
    */
   entity_type?: SheetAPI.EntityType | null;
+
+  /**
+   * Hide duplicate entities (show only primaries)
+   */
+  hide_duplicates?: boolean;
 
   /**
    * Filter by ICP ID

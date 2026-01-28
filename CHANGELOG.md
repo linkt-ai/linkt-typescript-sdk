@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.5.0 (2026-01-27)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** api update ([91b7f5a](https://github.com/linkt-ai/linkt-typescript-sdk/commit/91b7f5a7f0516c4342d242a43e1db652ce22e7cb))
+* **api:** api update ([4a2d7a8](https://github.com/linkt-ai/linkt-typescript-sdk/commit/4a2d7a84dc50ecc94fa1c82cb687534a2ac5e3ae))
+* **api:** api update ([611ec13](https://github.com/linkt-ai/linkt-typescript-sdk/commit/611ec131a59de9fb4c6c8726f13e377ae9ecdecb))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([69cbcac](https://github.com/linkt-ai/linkt-typescript-sdk/commit/69cbcac05c2d45623c7d34a70dc0d63f2fc33d9a))
+
 ## 0.4.0 (2026-01-22)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.3.0...v0.4.0)

@@ -51,6 +51,7 @@ describe('resource entity', () => {
       client.entity.list(
         {
           entity_type: 'company',
+          hide_duplicates: true,
           icp_id: 'icp_id',
           page: 1,
           page_size: 1,
@@ -88,7 +89,12 @@ describe('resource entity', () => {
 
   // Prism tests are disabled
   test.skip('bulkUpdateStatus: required and optional params', async () => {
-    const response = await client.entity.bulkUpdateStatus({ entity_ids: ['string'], status: 'status' });
+    const response = await client.entity.bulkUpdateStatus({
+      entity_ids: ['string'],
+      status: 'status',
+      propagate_to_duplicates: true,
+      propagate_to_family: true,
+    });
   });
 
   // Prism tests are disabled
@@ -158,6 +164,7 @@ describe('resource entity', () => {
     const response = await client.entity.search({
       q: 'x',
       entity_type: 'company',
+      hide_duplicates: true,
       icp_id: 'icp_id',
       page: 1,
       page_size: 1,
