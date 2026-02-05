@@ -44,6 +44,7 @@ export {
   type RunListParams,
   type RunGetQueueParams,
 } from './run';
+export { Schedule } from './schedule';
 export {
   SheetResource,
   type EntityType,

@@ -132,6 +132,8 @@ Methods:
 - <code title="post /v1/run/{run_id}/cancel">client.run.<a href="./src/resources/run.ts">cancel</a>(runID) -> void</code>
 - <code title="get /v1/run/{run_id}/queue">client.run.<a href="./src/resources/run.ts">getQueue</a>(runID, { ...params }) -> RunGetQueueResponse</code>
 
+# Schedule
+
 # Files
 
 Types:
