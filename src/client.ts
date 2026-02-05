@@ -61,6 +61,7 @@ import {
   RunListResponse,
   RunRetrieveResponse,
 } from './resources/run';
+import { Schedule } from './resources/schedule';
 import { Signal, SignalListParams, SignalListResponse, SignalResponse } from './resources/signal';
 import {
   IngestPromptConfigResponse,
@@ -815,6 +816,7 @@ export class Linkt {
   task: API.Task = new API.Task(this);
   signal: API.Signal = new API.Signal(this);
   run: API.Run = new API.Run(this);
+  schedule: API.Schedule = new API.Schedule(this);
   files: API.Files = new API.Files(this);
 }
 
@@ -824,6 +826,7 @@ Linkt.Entity = Entity;
 Linkt.Task = Task;
 Linkt.Signal = Signal;
 Linkt.Run = Run;
+Linkt.Schedule = Schedule;
 Linkt.Files = Files;
 
 export declare namespace Linkt {
@@ -909,6 +912,8 @@ export declare namespace Linkt {
     type RunListParams as RunListParams,
     type RunGetQueueParams as RunGetQueueParams,
   };
+
+  export { Schedule as Schedule };
 
   export {
     Files as Files,
