@@ -42,6 +42,8 @@ export interface SignalResponse {
 
   references: Array<string>;
 
+  score: number | null;
+
   signal_type: string | null;
 
   strength: string | null;

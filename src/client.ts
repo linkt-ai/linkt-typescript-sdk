@@ -61,7 +61,16 @@ import {
   RunListResponse,
   RunRetrieveResponse,
 } from './resources/run';
-import { Schedule } from './resources/schedule';
+import {
+  CreateScheduleRequest,
+  Schedule,
+  ScheduleCreateParams,
+  ScheduleListParams,
+  ScheduleListResponse,
+  ScheduleResponse,
+  ScheduleUpdateParams,
+  UpdateScheduleRequest,
+} from './resources/schedule';
 import { Signal, SignalListParams, SignalListResponse, SignalResponse } from './resources/signal';
 import {
   IngestPromptConfigResponse,
@@ -913,7 +922,16 @@ export declare namespace Linkt {
     type RunGetQueueParams as RunGetQueueParams,
   };
 
-  export { Schedule as Schedule };
+  export {
+    Schedule as Schedule,
+    type CreateScheduleRequest as CreateScheduleRequest,
+    type ScheduleListResponse as ScheduleListResponse,
+    type ScheduleResponse as ScheduleResponse,
+    type UpdateScheduleRequest as UpdateScheduleRequest,
+    type ScheduleCreateParams as ScheduleCreateParams,
+    type ScheduleUpdateParams as ScheduleUpdateParams,
+    type ScheduleListParams as ScheduleListParams,
+  };
 
   export {
     Files as Files,
