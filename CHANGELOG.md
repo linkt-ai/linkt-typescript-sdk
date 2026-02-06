@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.6.0 (2026-02-06)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** api update ([a54ab5f](https://github.com/linkt-ai/linkt-typescript-sdk/commit/a54ab5f0e4ebb4fefa253e6db40bed8b29feed4b))
+* **api:** api update ([4fb8db7](https://github.com/linkt-ai/linkt-typescript-sdk/commit/4fb8db7e0ef4bb05f3320bd3c48e5dd5f3ca9b40))
+* **api:** updates to add the schedule router ([02b1d37](https://github.com/linkt-ai/linkt-typescript-sdk/commit/02b1d3739975da29f928020115b9a6d00629c3a6))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([c220719](https://github.com/linkt-ai/linkt-typescript-sdk/commit/c220719391e5388cfc2156c302d1c672f64567d8))
+* **client:** avoid removing abort listener too early ([72c1595](https://github.com/linkt-ai/linkt-typescript-sdk/commit/72c1595741ebd973b9f761029cd34283b0105932))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([9f3177e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/9f3177ea970519573ec6bd42ccd10657353b1135))
+* **client:** restructure abort controller binding ([f090bcf](https://github.com/linkt-ai/linkt-typescript-sdk/commit/f090bcfb094a0e8fa387d664ebcac8a1af5233df))
+* **internal:** upgrade pnpm ([187ec6e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/187ec6ecb959753c9d782c9abb867599d0e1c324))
+
 ## 0.5.0 (2026-01-27)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.4.0...v0.5.0)

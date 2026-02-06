@@ -132,6 +132,23 @@ Methods:
 - <code title="post /v1/run/{run_id}/cancel">client.run.<a href="./src/resources/run.ts">cancel</a>(runID) -> void</code>
 - <code title="get /v1/run/{run_id}/queue">client.run.<a href="./src/resources/run.ts">getQueue</a>(runID, { ...params }) -> RunGetQueueResponse</code>
 
+# Schedule
+
+Types:
+
+- <code><a href="./src/resources/schedule.ts">CreateScheduleRequest</a></code>
+- <code><a href="./src/resources/schedule.ts">ScheduleListResponse</a></code>
+- <code><a href="./src/resources/schedule.ts">ScheduleResponse</a></code>
+- <code><a href="./src/resources/schedule.ts">UpdateScheduleRequest</a></code>
+
+Methods:
+
+- <code title="post /v1/schedule">client.schedule.<a href="./src/resources/schedule.ts">create</a>({ ...params }) -> ScheduleResponse</code>
+- <code title="get /v1/schedule/{schedule_id}">client.schedule.<a href="./src/resources/schedule.ts">retrieve</a>(scheduleID) -> ScheduleResponse</code>
+- <code title="patch /v1/schedule/{schedule_id}">client.schedule.<a href="./src/resources/schedule.ts">update</a>(scheduleID, { ...params }) -> ScheduleResponse</code>
+- <code title="get /v1/schedule">client.schedule.<a href="./src/resources/schedule.ts">list</a>({ ...params }) -> ScheduleListResponse</code>
+- <code title="delete /v1/schedule/{schedule_id}">client.schedule.<a href="./src/resources/schedule.ts">delete</a>(scheduleID) -> void</code>
+
 # Files
 
 Types:

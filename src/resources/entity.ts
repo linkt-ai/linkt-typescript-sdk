@@ -40,7 +40,8 @@ export class Entity extends APIResource {
    *
    * Supports filtering by:
    *
-   * - icp_id: Entities in sheets belonging to an ICP
+   * - icp_id: Entities in sheets belonging to ICP(s). Supports multiple values for
+   *   filtering across ICPs (e.g., ?icp_id=abc&icp_id=def).
    * - sheet_id: Entities in a specific sheet
    * - entity_type: Entities of a specific type (company, person, etc.)
    * - status: Filter by workflow status (supports multiple:
@@ -131,10 +132,12 @@ export class Entity extends APIResource {
    *   ?status=new&status=contacted) Valid values: new, reviewed, passed, contacted,
    *   null
    *
-   * Args: icp_id: Filter by ICP ID (REQUIRED for format=combined) sheet_id: Filter
-   * by sheet ID entity_type: Filter by entity type (ignored for format=combined)
-   * entity_ids: Export specific entity IDs status: Filter by status values (multiple
-   * allowed) format: Export format - "separate" (default) or "combined"
+   * Args: icp_id: Filter by ICP ID(s). Supports multiple values for separate format
+   * (e.g., ?icp_id=abc&icp_id=def). Combined format only supports a single ICP.
+   * sheet_id: Filter by sheet ID entity_type: Filter by entity type (ignored for
+   * format=combined) entity_ids: Export specific entity IDs status: Filter by status
+   * values (multiple allowed) hide_duplicates: Exclude duplicate entities from
+   * export format: Export format - "separate" (default) or "combined"
    *
    * Returns: StreamingResponse with CSV content
    *
@@ -149,13 +152,16 @@ export class Entity extends APIResource {
    * Get entity counts grouped by entity_type.
    *
    * Returns the count of entities for each entity_type (company, person, etc.)
-   * across the organization. Supports optional filtering by ICP or status.
+   * across the organization. Supports optional filtering by ICP(s) or status.
    *
-   * Additional filtering:
+   * Filtering options:
    *
+   * - icp_id: Filter by ICP ID(s). Supports multiple values for counting across ICPs
+   *   (e.g., ?icp_id=abc&icp_id=def).
    * - status: Filter by workflow status (supports multiple:
    *   ?status=new&status=reviewed) Valid values: new, reviewed, passed, contacted,
    *   null
+   * - hide_duplicates: When true, excludes duplicate entities from counts
    *
    * Used by Entity Master List for accurate tab navigation counts.
    */
@@ -175,7 +181,8 @@ export class Entity extends APIResource {
    * Scope of search determined by filters:
    *
    * - sheet_id: Search within specific sheet
-   * - icp_id: Search across ICP sheets
+   * - icp_id: Search across ICP sheet(s). Supports multiple values for searching
+   *   across ICPs (e.g., ?icp_id=abc&icp_id=def).
    * - No filters: Search org-wide
    *
    * Additional filtering:
@@ -479,9 +486,9 @@ export interface EntityListParams {
   hide_duplicates?: boolean;
 
   /**
-   * Filter by ICP ID
+   * Filter by ICP ID(s) - supports multiple
    */
-  icp_id?: string | null;
+  icp_id?: Array<string> | null;
 
   /**
    * Page number (1-based)
@@ -543,9 +550,14 @@ export interface EntityExportParams {
   format?: 'separate' | 'combined';
 
   /**
-   * Filter by ICP ID
+   * Exclude duplicate entities from export (show only primaries)
    */
-  icp_id?: string | null;
+  hide_duplicates?: boolean;
+
+  /**
+   * Filter by ICP ID(s) - supports multiple
+   */
+  icp_id?: Array<string> | null;
 
   /**
    * Filter by sheet ID
@@ -560,9 +572,14 @@ export interface EntityExportParams {
 
 export interface EntityGetCountsParams {
   /**
-   * Filter by ICP ID
+   * Exclude duplicate entities from counts (show only primaries)
    */
-  icp_id?: string | null;
+  hide_duplicates?: boolean;
+
+  /**
+   * Filter by ICP ID(s) - supports multiple
+   */
+  icp_id?: Array<string> | null;
 
   /**
    * Filter by status values (supports multiple: ?status=new&status=passed)
@@ -587,9 +604,9 @@ export interface EntitySearchParams {
   hide_duplicates?: boolean;
 
   /**
-   * Filter by ICP ID
+   * Filter by ICP ID(s) - supports multiple
    */
-  icp_id?: string | null;
+  icp_id?: Array<string> | null;
 
   /**
    * Page number

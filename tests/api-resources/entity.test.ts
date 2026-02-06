@@ -52,7 +52,7 @@ describe('resource entity', () => {
         {
           entity_type: 'company',
           hide_duplicates: true,
-          icp_id: 'icp_id',
+          icp_id: ['string'],
           page: 1,
           page_size: 1,
           sheet_id: 'sheet_id',
@@ -118,7 +118,8 @@ describe('resource entity', () => {
           entity_ids: ['string'],
           entity_type: 'company',
           format: 'separate',
-          icp_id: 'icp_id',
+          hide_duplicates: true,
+          icp_id: ['string'],
           sheet_id: 'sheet_id',
           status: ['string'],
         },
@@ -143,7 +144,14 @@ describe('resource entity', () => {
   test.skip('getCounts: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.entity.getCounts({ icp_id: 'icp_id', status: ['string'] }, { path: '/_stainless_unknown_path' }),
+      client.entity.getCounts(
+        {
+          hide_duplicates: true,
+          icp_id: ['string'],
+          status: ['string'],
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Linkt.NotFoundError);
   });
 
@@ -165,7 +173,7 @@ describe('resource entity', () => {
       q: 'x',
       entity_type: 'company',
       hide_duplicates: true,
-      icp_id: 'icp_id',
+      icp_id: ['string'],
       page: 1,
       page_size: 1,
       sheet_id: 'sheet_id',

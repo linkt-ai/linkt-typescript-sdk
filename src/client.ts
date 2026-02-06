@@ -61,6 +61,16 @@ import {
   RunListResponse,
   RunRetrieveResponse,
 } from './resources/run';
+import {
+  CreateScheduleRequest,
+  Schedule,
+  ScheduleCreateParams,
+  ScheduleListParams,
+  ScheduleListResponse,
+  ScheduleResponse,
+  ScheduleUpdateParams,
+  UpdateScheduleRequest,
+} from './resources/schedule';
 import { Signal, SignalListParams, SignalListResponse, SignalResponse } from './resources/signal';
 import {
   IngestPromptConfigResponse,
@@ -576,9 +586,10 @@ export class Linkt {
     controller: AbortController,
   ): Promise<Response> {
     const { signal, method, ...options } = init || {};
-    if (signal) signal.addEventListener('abort', () => controller.abort());
+    const abort = this._makeAbort(controller);
+    if (signal) signal.addEventListener('abort', abort, { once: true });
 
-    const timeout = setTimeout(() => controller.abort(), ms);
+    const timeout = setTimeout(abort, ms);
 
     const isReadableBody =
       ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
@@ -745,6 +756,12 @@ export class Linkt {
     return headers.values;
   }
 
+  private _makeAbort(controller: AbortController) {
+    // note: we can't just inline this method inside `fetchWithTimeout()` because then the closure
+    //       would capture all request options, and cause a memory leak.
+    return () => controller.abort();
+  }
+
   private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
     bodyHeaders: HeadersLike;
     body: BodyInit | undefined;
@@ -807,6 +824,7 @@ export class Linkt {
   task: API.Task = new API.Task(this);
   signal: API.Signal = new API.Signal(this);
   run: API.Run = new API.Run(this);
+  schedule: API.Schedule = new API.Schedule(this);
   files: API.Files = new API.Files(this);
 }
 
@@ -816,6 +834,7 @@ Linkt.Entity = Entity;
 Linkt.Task = Task;
 Linkt.Signal = Signal;
 Linkt.Run = Run;
+Linkt.Schedule = Schedule;
 Linkt.Files = Files;
 
 export declare namespace Linkt {
@@ -900,6 +919,17 @@ export declare namespace Linkt {
     type RunCreateParams as RunCreateParams,
     type RunListParams as RunListParams,
     type RunGetQueueParams as RunGetQueueParams,
+  };
+
+  export {
+    Schedule as Schedule,
+    type CreateScheduleRequest as CreateScheduleRequest,
+    type ScheduleListResponse as ScheduleListResponse,
+    type ScheduleResponse as ScheduleResponse,
+    type UpdateScheduleRequest as UpdateScheduleRequest,
+    type ScheduleCreateParams as ScheduleCreateParams,
+    type ScheduleUpdateParams as ScheduleUpdateParams,
+    type ScheduleListParams as ScheduleListParams,
   };
 
   export {

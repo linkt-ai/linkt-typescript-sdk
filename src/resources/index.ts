@@ -45,6 +45,16 @@ export {
   type RunGetQueueParams,
 } from './run';
 export {
+  Schedule,
+  type CreateScheduleRequest,
+  type ScheduleListResponse,
+  type ScheduleResponse,
+  type UpdateScheduleRequest,
+  type ScheduleCreateParams,
+  type ScheduleUpdateParams,
+  type ScheduleListParams,
+} from './schedule';
+export {
   SheetResource,
   type EntityType,
   type Sheet,
