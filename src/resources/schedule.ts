@@ -352,10 +352,7 @@ export interface ScheduleListParams {
   sort_by?: string | null;
 
   /**
-   * Schedule status values.
-   *
-   * ACTIVE: Schedule is eligible for execution PAUSED: Temporarily suspended but can
-   * be resumed DISABLED: Permanently disabled (requires manual intervention)
+   * Filter by status
    */
   status?: 'active' | 'paused' | 'disabled' | null;
 
