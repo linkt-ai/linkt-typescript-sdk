@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.1 (2026-02-14)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.6.0...v0.6.1)
+
+### Chores
+
+* **api:** minor updates ([5443651](https://github.com/linkt-ai/linkt-typescript-sdk/commit/5443651884bcb43a53e26c02175c878bc5c50175))
+* **internal:** avoid type checking errors with ts-reset ([48681ae](https://github.com/linkt-ai/linkt-typescript-sdk/commit/48681ae25f230c34348001fa40c860c3efa1f700))
+
 ## 0.6.0 (2026-02-06)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.5.0...v0.6.0)
