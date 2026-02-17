@@ -1,4 +1,4 @@
 configured_endpoints: 46
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/linkt-ai%2Flinkt-0727781c9395dd495ce61dc13cea49af67f487d070db2de167262202e398c23a.yml
-openapi_spec_hash: c66c65039488e0d4c7ba53cdec17f3d9
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/linkt-ai%2Flinkt-1ce66ec076ef94e9f4e371bdac189652e621889a92d956191ba9ec28f0b81f19.yml
+openapi_spec_hash: acffa652ff98bd494dab1a1053bc6706
 config_hash: 6c79fff24b4c328095aedeef70cfd015
