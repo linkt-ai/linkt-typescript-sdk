@@ -476,7 +476,7 @@ export interface EntityUpdateParams {
 
 export interface EntityListParams {
   /**
-   * Valid entity types for sheets.
+   * Filter by entity type
    */
   entity_type?: SheetAPI.EntityType | null;
 
@@ -540,7 +540,7 @@ export interface EntityExportParams {
   entity_ids?: Array<string> | null;
 
   /**
-   * Valid entity types for sheets.
+   * Filter by entity type
    */
   entity_type?: SheetAPI.EntityType | null;
 
@@ -594,7 +594,7 @@ export interface EntitySearchParams {
   q: string;
 
   /**
-   * Valid entity types for sheets.
+   * Filter by entity type
    */
   entity_type?: SheetAPI.EntityType | null;
 

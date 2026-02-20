@@ -136,6 +136,16 @@ export interface IcpResponse {
   name: string;
 
   updated_at: string;
+
+  /**
+   * v2 entity structure (lightweight, no descriptions)
+   */
+  entity_structure?: Array<IcpResponse.EntityStructure> | null;
+
+  /**
+   * ICP schema version (1 or 2)
+   */
+  schema_version?: number;
 }
 
 export namespace IcpResponse {
@@ -161,6 +171,29 @@ export namespace IcpResponse {
      */
     description: string;
 
+    /**
+     * Entity type (company, person, etc.)
+     */
+    entity_type: string;
+
+    /**
+     * If this is the root entity type
+     */
+    root: boolean;
+
+    /**
+     * For non-root entities, desired count per parent
+     */
+    desired_count?: number | null;
+  }
+
+  /**
+   * Response model for v2 entity structure entry.
+   *
+   * Lightweight structure that defines entity types and their hierarchy without the
+   * business description (which lives on sheets in v2).
+   */
+  export interface EntityStructure {
     /**
      * Entity type (company, person, etc.)
      */

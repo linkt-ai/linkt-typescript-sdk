@@ -8,7 +8,7 @@ const client = new Linkt({
 });
 
 describe('resource entity', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.entity.retrieve('entity_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource entity', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.entity.update('entity_id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource entity', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.entity.list();
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource entity', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -63,7 +63,7 @@ describe('resource entity', () => {
     ).rejects.toThrow(Linkt.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.entity.delete('entity_id');
     const rawResponse = await responsePromise.asResponse();
@@ -75,7 +75,7 @@ describe('resource entity', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('bulkUpdateStatus: only required params', async () => {
     const responsePromise = client.entity.bulkUpdateStatus({ entity_ids: ['string'], status: 'status' });
     const rawResponse = await responsePromise.asResponse();
@@ -87,7 +87,7 @@ describe('resource entity', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('bulkUpdateStatus: required and optional params', async () => {
     const response = await client.entity.bulkUpdateStatus({
       entity_ids: ['string'],
@@ -97,7 +97,7 @@ describe('resource entity', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('export', async () => {
     const responsePromise = client.entity.export();
     const rawResponse = await responsePromise.asResponse();
@@ -109,7 +109,7 @@ describe('resource entity', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('export: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -128,7 +128,7 @@ describe('resource entity', () => {
     ).rejects.toThrow(Linkt.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getCounts', async () => {
     const responsePromise = client.entity.getCounts();
     const rawResponse = await responsePromise.asResponse();
@@ -140,7 +140,7 @@ describe('resource entity', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getCounts: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -155,7 +155,7 @@ describe('resource entity', () => {
     ).rejects.toThrow(Linkt.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: only required params', async () => {
     const responsePromise = client.entity.search({ q: 'x' });
     const rawResponse = await responsePromise.asResponse();
@@ -167,7 +167,7 @@ describe('resource entity', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: required and optional params', async () => {
     const response = await client.entity.search({
       q: 'x',
