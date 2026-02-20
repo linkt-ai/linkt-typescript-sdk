@@ -8,7 +8,7 @@ const client = new Linkt({
 });
 
 describe('resource schema', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addFields: only required params', async () => {
     const responsePromise = client.sheet.schema.addFields('5eb7cf5a86d9755df3a6c593', {
       fields: [{ field_type: 'string', name: 'name' }],
@@ -22,7 +22,7 @@ describe('resource schema', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addFields: required and optional params', async () => {
     const response = await client.sheet.schema.addFields('5eb7cf5a86d9755df3a6c593', {
       fields: [
@@ -41,7 +41,7 @@ describe('resource schema', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deleteFields: only required params', async () => {
     const responsePromise = client.sheet.schema.deleteFields('5eb7cf5a86d9755df3a6c593', {
       fields: ['string'],
@@ -55,14 +55,14 @@ describe('resource schema', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deleteFields: required and optional params', async () => {
     const response = await client.sheet.schema.deleteFields('5eb7cf5a86d9755df3a6c593', {
       fields: ['string'],
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.sheet.schema.get('5eb7cf5a86d9755df3a6c593');
     const rawResponse = await responsePromise.asResponse();
@@ -74,7 +74,7 @@ describe('resource schema', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getDefault', async () => {
     const responsePromise = client.sheet.schema.getDefault();
     const rawResponse = await responsePromise.asResponse();
@@ -86,7 +86,7 @@ describe('resource schema', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getFieldDefinitions', async () => {
     const responsePromise = client.sheet.schema.getFieldDefinitions();
     const rawResponse = await responsePromise.asResponse();
