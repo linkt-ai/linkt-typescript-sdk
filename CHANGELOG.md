@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.7.0 (2026-02-20)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** api update ([82e5c6e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/82e5c6e50d78db2b027188126b083690a85371a7))
+
+
+### Chores
+
+* **api:** minor updates ([5443651](https://github.com/linkt-ai/linkt-typescript-sdk/commit/5443651884bcb43a53e26c02175c878bc5c50175))
+* **internal/client:** fix form-urlencoded requests ([99461e8](https://github.com/linkt-ai/linkt-typescript-sdk/commit/99461e8f95703e8a100a815be4c57c10134dca9e))
+* **internal:** avoid type checking errors with ts-reset ([48681ae](https://github.com/linkt-ai/linkt-typescript-sdk/commit/48681ae25f230c34348001fa40c860c3efa1f700))
+* **internal:** remove mock server code ([77c908e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/77c908ec5a4df761f20a3943452e13eada0ec67c))
+* update mock server docs ([34df5bc](https://github.com/linkt-ai/linkt-typescript-sdk/commit/34df5bc126c1b35b64ea2a6434c7e9410126bc35))
+
 ## 0.6.0 (2026-02-06)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.5.0...v0.6.0)
