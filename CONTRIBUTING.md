@@ -60,7 +60,7 @@ $ yarn link @linkt/sdk
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @linkt/sdk
+$ pnpm link --global @linkt/sdk
 ```
 
 ## Running tests
