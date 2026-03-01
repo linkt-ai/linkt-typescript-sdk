@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { type Uploadable } from '../core/uploads';
 import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 import { path } from '../internal/utils/path';
@@ -203,7 +204,7 @@ export interface FileUploadParams {
   /**
    * CSV or XLSX file to upload
    */
-  file: string;
+  file: Uploadable;
 }
 
 export declare namespace Files {
