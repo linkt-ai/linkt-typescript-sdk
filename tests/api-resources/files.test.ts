@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Linkt, { toFile } from '@linkt/sdk';
+import Linkt from '@linkt/sdk';
 
 const client = new Linkt({
   apiKey: 'My API Key',
@@ -42,9 +42,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('upload: only required params', async () => {
-    const responsePromise = client.files.upload({
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
-    });
+    const responsePromise = client.files.upload({ file: 'file' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -56,8 +54,6 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('upload: required and optional params', async () => {
-    const response = await client.files.upload({
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
-    });
+    const response = await client.files.upload({ file: 'file' });
   });
 });
