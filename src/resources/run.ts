@@ -6,6 +6,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * **Runs** represent individual workflow executions. When you execute a task, it creates a run that progresses through states: SCHEDULED -> PENDING -> RUNNING -> COMPLETED (or FAILED/CANCELED). Monitor run status, view processing queues, and cancel running workflows through these endpoints.
+ */
 export class Run extends APIResource {
   /**
    * Execute an agent by creating a new run.

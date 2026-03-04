@@ -15,6 +15,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * **Sheets** are collections WHERE entities (companies, people) are stored. Each sheet must reference an ICP that defines targeting criteria, and holds entities of a single type (company or person). Sheets support custom schemas, CSV export, and comprehensive entity filtering. Use sheets to organize and manage your research results.
+ */
 export class SheetResource extends APIResource {
   schema: SchemaAPI.Schema = new SchemaAPI.Schema(this._client);
 

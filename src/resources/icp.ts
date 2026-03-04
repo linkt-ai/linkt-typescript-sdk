@@ -6,6 +6,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * **Ideal Customer Profiles (ICPs)** define WHAT entities to target using business-level descriptions and filters. ICPs are the foundation of your research workflows - they specify targeting criteria like industry, company size, job titles, and other characteristics that define your ideal customers. Create ICPs first, then link Sheets to them for entity storage.
+ */
 export class Icp extends APIResource {
   /**
    * Create a new Ideal Customer Profile (ICP).
