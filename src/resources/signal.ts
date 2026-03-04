@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * **Signals** are time-based events detected by AI agents that affect your entities. Examples include funding rounds, leadership changes, hiring events, and product launches. Signals are **read-only** - they are created automatically by research workflows and represent an immutable audit trail of what happened and when.
+ */
 export class Signal extends APIResource {
   /**
    * Get a specific signal by ID (read-only).

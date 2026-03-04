@@ -8,6 +8,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * **Tasks** are reusable workflow templates that define HOW research is executed. Tasks reference Prefect flow deployments and can be configured with prompts and parameters. Create a task once, then execute it multiple times to generate runs. Each execution creates a new run that can be monitored independently.
+ */
 export class Task extends APIResource {
   /**
    * Create a new task template.

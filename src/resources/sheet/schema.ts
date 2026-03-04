@@ -6,6 +6,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * **Sheet Schemas** define the structure of entity data within sheets. Each entity type (company, person) has a default schema with standard fields. Use these endpoints to view default schemas, add custom fields to capture additional data points, or remove custom fields you no longer need.
+ */
 export class Schema extends APIResource {
   /**
    * Add custom fields to a sheet's entity schema.

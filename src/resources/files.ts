@@ -7,6 +7,9 @@ import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 import { path } from '../internal/utils/path';
 
+/**
+ * **Files** are uploaded data sources for your research workflows. Upload CSV or XLSX files containing entities (companies, people) or monitoring targets. Files are processed and stored securely, then can be referenced when creating signal monitoring or ingest tasks. XLSX files are automatically converted to CSV format.
+ */
 export class Files extends APIResource {
   /**
    * Get file details by ID.
