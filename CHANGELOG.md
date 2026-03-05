@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.7.0 (2026-03-05)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** api update ([f55c10e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/f55c10eb4540c67c93456e15e86b673cd6aa0a06))
+* **api:** api update ([99f0f52](https://github.com/linkt-ai/linkt-typescript-sdk/commit/99f0f5259a46fa54406ef9444526d9f9e16c388b))
+* **api:** api update ([1e0f4d3](https://github.com/linkt-ai/linkt-typescript-sdk/commit/1e0f4d3c9f45a575faeac2f4ee62569053684d38))
+* **api:** api update ([c92405e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/c92405efdae634072fbce1eb4e9f44075362290b))
+* **api:** api update ([c33f643](https://github.com/linkt-ai/linkt-typescript-sdk/commit/c33f643e6760e9537f1f95c5d4ed3bac4aea7c04))
+* **api:** api update ([82e5c6e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/82e5c6e50d78db2b027188126b083690a85371a7))
+
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([5e4f9c0](https://github.com/linkt-ai/linkt-typescript-sdk/commit/5e4f9c0ca6bff5a935502d9d8542e66294a77f19))
+
+
+### Chores
+
+* **api:** minor updates ([5443651](https://github.com/linkt-ai/linkt-typescript-sdk/commit/5443651884bcb43a53e26c02175c878bc5c50175))
+* **internal/client:** fix form-urlencoded requests ([99461e8](https://github.com/linkt-ai/linkt-typescript-sdk/commit/99461e8f95703e8a100a815be4c57c10134dca9e))
+* **internal:** avoid type checking errors with ts-reset ([48681ae](https://github.com/linkt-ai/linkt-typescript-sdk/commit/48681ae25f230c34348001fa40c860c3efa1f700))
+* **internal:** codegen related update ([64c3d47](https://github.com/linkt-ai/linkt-typescript-sdk/commit/64c3d4745b48c3c12198e44bc8fc904bf9b22c55))
+* **internal:** move stringifyQuery implementation to internal function ([5d86f43](https://github.com/linkt-ai/linkt-typescript-sdk/commit/5d86f43b414c93e910595422b36f4f019cdb6760))
+* **internal:** remove mock server code ([77c908e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/77c908ec5a4df761f20a3943452e13eada0ec67c))
+* **internal:** upgrade pnpm version ([8868ccd](https://github.com/linkt-ai/linkt-typescript-sdk/commit/8868ccd8c215b702bdfdb270110b40bc6a3c4f6d))
+* update mock server docs ([34df5bc](https://github.com/linkt-ai/linkt-typescript-sdk/commit/34df5bc126c1b35b64ea2a6434c7e9410126bc35))
+
 ## 0.6.0 (2026-02-06)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.5.0...v0.6.0)

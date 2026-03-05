@@ -8,6 +8,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * **Tasks** are reusable workflow templates that define HOW research is executed. Tasks reference Prefect flow deployments and can be configured with prompts and parameters. Create a task once, then execute it multiple times to generate runs. Each execution creates a new run that can be monitored independently.
+ */
 export class Task extends APIResource {
   /**
    * Create a new task template.
@@ -758,12 +761,61 @@ export interface TaskCreateResponse {
   task_config?:
     | SearchTaskConfigResponse
     | IngestTaskConfigResponse
+    | TaskCreateResponse.OnDemandIngestTaskConfigResponse
     | IngestPromptConfigResponse
     | ProfilePromptConfigResponse
     | SignalTopicConfigResponse
     | SignalCsvConfigResponse
     | SignalSheetConfigResponse
     | null;
+}
+
+export namespace TaskCreateResponse {
+  /**
+   * On-demand ingest task configuration in API responses.
+   *
+   * Response model for on-demand ingest task configs that excludes backend-managed
+   * fields from the API surface.
+   *
+   * Attributes: type: Config type discriminator (always "ingest-ondemand"). file_id:
+   * ID of the CSV file. primary_column: Column containing entity names.
+   * csv_entity_type: Entity type in CSV. ignored_fields: Existing sheet fields
+   * allowed to be nullable. new_custom_fields: New enrichment fields added to sheet
+   * schema. webhook_url: Webhook URL for completion notification.
+   */
+  export interface OnDemandIngestTaskConfigResponse {
+    /**
+     * Entity type in CSV
+     */
+    csv_entity_type: string;
+
+    /**
+     * ID of the CSV file
+     */
+    file_id: string;
+
+    /**
+     * Column containing entity names
+     */
+    primary_column: string;
+
+    /**
+     * Existing sheet fields allowed to be nullable
+     */
+    ignored_fields?: Array<string>;
+
+    /**
+     * New enrichment fields added to sheet schema
+     */
+    new_custom_fields?: Array<{ [key: string]: string }>;
+
+    type?: 'ingest-ondemand';
+
+    /**
+     * Webhook URL for completion notification
+     */
+    webhook_url?: string | null;
+  }
 }
 
 /**
@@ -830,12 +882,61 @@ export interface TaskRetrieveResponse {
   task_config?:
     | SearchTaskConfigResponse
     | IngestTaskConfigResponse
+    | TaskRetrieveResponse.OnDemandIngestTaskConfigResponse
     | IngestPromptConfigResponse
     | ProfilePromptConfigResponse
     | SignalTopicConfigResponse
     | SignalCsvConfigResponse
     | SignalSheetConfigResponse
     | null;
+}
+
+export namespace TaskRetrieveResponse {
+  /**
+   * On-demand ingest task configuration in API responses.
+   *
+   * Response model for on-demand ingest task configs that excludes backend-managed
+   * fields from the API surface.
+   *
+   * Attributes: type: Config type discriminator (always "ingest-ondemand"). file_id:
+   * ID of the CSV file. primary_column: Column containing entity names.
+   * csv_entity_type: Entity type in CSV. ignored_fields: Existing sheet fields
+   * allowed to be nullable. new_custom_fields: New enrichment fields added to sheet
+   * schema. webhook_url: Webhook URL for completion notification.
+   */
+  export interface OnDemandIngestTaskConfigResponse {
+    /**
+     * Entity type in CSV
+     */
+    csv_entity_type: string;
+
+    /**
+     * ID of the CSV file
+     */
+    file_id: string;
+
+    /**
+     * Column containing entity names
+     */
+    primary_column: string;
+
+    /**
+     * Existing sheet fields allowed to be nullable
+     */
+    ignored_fields?: Array<string>;
+
+    /**
+     * New enrichment fields added to sheet schema
+     */
+    new_custom_fields?: Array<{ [key: string]: string }>;
+
+    type?: 'ingest-ondemand';
+
+    /**
+     * Webhook URL for completion notification
+     */
+    webhook_url?: string | null;
+  }
 }
 
 /**
@@ -931,12 +1032,61 @@ export namespace TaskListResponse {
     task_config?:
       | TaskAPI.SearchTaskConfigResponse
       | TaskAPI.IngestTaskConfigResponse
+      | Task.OnDemandIngestTaskConfigResponse
       | TaskAPI.IngestPromptConfigResponse
       | TaskAPI.ProfilePromptConfigResponse
       | TaskAPI.SignalTopicConfigResponse
       | TaskAPI.SignalCsvConfigResponse
       | TaskAPI.SignalSheetConfigResponse
       | null;
+  }
+
+  export namespace Task {
+    /**
+     * On-demand ingest task configuration in API responses.
+     *
+     * Response model for on-demand ingest task configs that excludes backend-managed
+     * fields from the API surface.
+     *
+     * Attributes: type: Config type discriminator (always "ingest-ondemand"). file_id:
+     * ID of the CSV file. primary_column: Column containing entity names.
+     * csv_entity_type: Entity type in CSV. ignored_fields: Existing sheet fields
+     * allowed to be nullable. new_custom_fields: New enrichment fields added to sheet
+     * schema. webhook_url: Webhook URL for completion notification.
+     */
+    export interface OnDemandIngestTaskConfigResponse {
+      /**
+       * Entity type in CSV
+       */
+      csv_entity_type: string;
+
+      /**
+       * ID of the CSV file
+       */
+      file_id: string;
+
+      /**
+       * Column containing entity names
+       */
+      primary_column: string;
+
+      /**
+       * Existing sheet fields allowed to be nullable
+       */
+      ignored_fields?: Array<string>;
+
+      /**
+       * New enrichment fields added to sheet schema
+       */
+      new_custom_fields?: Array<{ [key: string]: string }>;
+
+      type?: 'ingest-ondemand';
+
+      /**
+       * Webhook URL for completion notification
+       */
+      webhook_url?: string | null;
+    }
   }
 }
 
@@ -1000,11 +1150,65 @@ export interface TaskCreateParams {
   task_config?:
     | SearchTaskConfig
     | IngestTaskConfig
+    | TaskCreateParams.OnDemandIngestTaskConfigRequest
     | ProfilePromptConfig
     | SignalTopicConfig
     | SignalCsvConfig
     | SignalSheetConfig
     | null;
+}
+
+export namespace TaskCreateParams {
+  /**
+   * On-demand ingest task configuration for adding entities to existing ICPs.
+   *
+   * Creates a task that ingests additional entities from a CSV file into an existing
+   * ICP. Supports declaring which existing sheet fields can be nullable for the new
+   * entities and adding new enrichment fields to the sheet schema.
+   *
+   * Attributes: type: Config type discriminator (always "ingest-ondemand"). file_id:
+   * ID of the uploaded CSV file to process. primary_column: Column containing entity
+   * names for matching. csv_entity_type: Entity type in the CSV (e.g., 'person',
+   * 'company'). ignored_fields: Existing sheet fields allowed to be nullable for new
+   * entities. new_custom_fields: New enrichment fields to add to the sheet schema.
+   * webhook_url: Optional webhook URL for completion notification.
+   */
+  export interface OnDemandIngestTaskConfigRequest {
+    /**
+     * Entity type in the CSV (e.g., 'person', 'company')
+     */
+    csv_entity_type: string;
+
+    /**
+     * ID of the uploaded CSV file to process
+     */
+    file_id: string;
+
+    /**
+     * Column containing entity names for matching
+     */
+    primary_column: string;
+
+    /**
+     * Existing sheet fields allowed to be nullable for new entities
+     */
+    ignored_fields?: Array<string>;
+
+    /**
+     * New enrichment fields to add to sheet schema ({name, description})
+     */
+    new_custom_fields?: Array<{ [key: string]: string }>;
+
+    /**
+     * Config type discriminator
+     */
+    type?: 'ingest-ondemand';
+
+    /**
+     * Optional webhook URL to notify when workflow completes
+     */
+    webhook_url?: string | null;
+  }
 }
 
 export interface TaskUpdateParams {
@@ -1039,11 +1243,65 @@ export interface TaskUpdateParams {
   task_config?:
     | SearchTaskConfig
     | IngestTaskConfig
+    | TaskUpdateParams.OnDemandIngestTaskConfigRequest
     | ProfilePromptConfig
     | SignalTopicConfig
     | SignalCsvConfig
     | SignalSheetConfig
     | null;
+}
+
+export namespace TaskUpdateParams {
+  /**
+   * On-demand ingest task configuration for adding entities to existing ICPs.
+   *
+   * Creates a task that ingests additional entities from a CSV file into an existing
+   * ICP. Supports declaring which existing sheet fields can be nullable for the new
+   * entities and adding new enrichment fields to the sheet schema.
+   *
+   * Attributes: type: Config type discriminator (always "ingest-ondemand"). file_id:
+   * ID of the uploaded CSV file to process. primary_column: Column containing entity
+   * names for matching. csv_entity_type: Entity type in the CSV (e.g., 'person',
+   * 'company'). ignored_fields: Existing sheet fields allowed to be nullable for new
+   * entities. new_custom_fields: New enrichment fields to add to the sheet schema.
+   * webhook_url: Optional webhook URL for completion notification.
+   */
+  export interface OnDemandIngestTaskConfigRequest {
+    /**
+     * Entity type in the CSV (e.g., 'person', 'company')
+     */
+    csv_entity_type: string;
+
+    /**
+     * ID of the uploaded CSV file to process
+     */
+    file_id: string;
+
+    /**
+     * Column containing entity names for matching
+     */
+    primary_column: string;
+
+    /**
+     * Existing sheet fields allowed to be nullable for new entities
+     */
+    ignored_fields?: Array<string>;
+
+    /**
+     * New enrichment fields to add to sheet schema ({name, description})
+     */
+    new_custom_fields?: Array<{ [key: string]: string }>;
+
+    /**
+     * Config type discriminator
+     */
+    type?: 'ingest-ondemand';
+
+    /**
+     * Optional webhook URL to notify when workflow completes
+     */
+    webhook_url?: string | null;
+  }
 }
 
 export interface TaskListParams {

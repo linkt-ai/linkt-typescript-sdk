@@ -8,7 +8,7 @@ const client = new Linkt({
 });
 
 describe('resource run', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.run.create({
       agent_id: '5eb7cf5a86d9755df3a6c593',
@@ -23,7 +23,7 @@ describe('resource run', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.run.create({
       agent_id: '5eb7cf5a86d9755df3a6c593',
@@ -32,7 +32,7 @@ describe('resource run', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.run.retrieve('5eb7cf5a86d9755df3a6c593');
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource run', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.run.list();
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource run', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -82,7 +82,7 @@ describe('resource run', () => {
     ).rejects.toThrow(Linkt.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.run.delete('5eb7cf5a86d9755df3a6c593');
     const rawResponse = await responsePromise.asResponse();
@@ -94,7 +94,7 @@ describe('resource run', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('cancel', async () => {
     const responsePromise = client.run.cancel('5eb7cf5a86d9755df3a6c593');
     const rawResponse = await responsePromise.asResponse();
@@ -106,7 +106,7 @@ describe('resource run', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getQueue', async () => {
     const responsePromise = client.run.getQueue('5eb7cf5a86d9755df3a6c593');
     const rawResponse = await responsePromise.asResponse();
@@ -118,7 +118,7 @@ describe('resource run', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getQueue: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(

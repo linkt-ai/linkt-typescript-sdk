@@ -11,7 +11,7 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
-import * as qs from './internal/qs';
+import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
@@ -323,8 +323,8 @@ export class Linkt {
     return buildHeaders([{ 'x-api-key': this.apiKey }]);
   }
 
-  protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -361,7 +361,7 @@ export class Linkt {
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query);
     }
 
     return url.toString();
@@ -545,7 +545,7 @@ export class Linkt {
       loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
-      const errJSON = safeJSON(errText);
+      const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
       loggerFor(this).debug(
@@ -794,6 +794,14 @@ export class Linkt {
         (Symbol.iterator in body && 'next' in body && typeof body.next === 'function'))
     ) {
       return { bodyHeaders: undefined, body: Shims.ReadableStreamFrom(body as AsyncIterable<Uint8Array>) };
+    } else if (
+      typeof body === 'object' &&
+      headers.values.get('content-type') === 'application/x-www-form-urlencoded'
+    ) {
+      return {
+        bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: this.stringifyQuery(body),
+      };
     } else {
       return this.#encoder({ body, headers });
     }
@@ -818,13 +826,31 @@ export class Linkt {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * **Ideal Customer Profiles (ICPs)** define WHAT entities to target using business-level descriptions and filters. ICPs are the foundation of your research workflows - they specify targeting criteria like industry, company size, job titles, and other characteristics that define your ideal customers. Create ICPs first, then link Sheets to them for entity storage.
+   */
   icp: API.Icp = new API.Icp(this);
+  /**
+   * **Sheets** are collections WHERE entities (companies, people) are stored. Each sheet must reference an ICP that defines targeting criteria, and holds entities of a single type (company or person). Sheets support custom schemas, CSV export, and comprehensive entity filtering. Use sheets to organize and manage your research results.
+   */
   sheet: API.SheetResource = new API.SheetResource(this);
   entity: API.Entity = new API.Entity(this);
+  /**
+   * **Tasks** are reusable workflow templates that define HOW research is executed. Tasks reference Prefect flow deployments and can be configured with prompts and parameters. Create a task once, then execute it multiple times to generate runs. Each execution creates a new run that can be monitored independently.
+   */
   task: API.Task = new API.Task(this);
+  /**
+   * **Signals** are time-based events detected by AI agents that affect your entities. Examples include funding rounds, leadership changes, hiring events, and product launches. Signals are **read-only** - they are created automatically by research workflows and represent an immutable audit trail of what happened and when.
+   */
   signal: API.Signal = new API.Signal(this);
+  /**
+   * **Runs** represent individual workflow executions. When you execute a task, it creates a run that progresses through states: SCHEDULED -> PENDING -> RUNNING -> COMPLETED (or FAILED/CANCELED). Monitor run status, view processing queues, and cancel running workflows through these endpoints.
+   */
   run: API.Run = new API.Run(this);
   schedule: API.Schedule = new API.Schedule(this);
+  /**
+   * **Files** are uploaded data sources for your research workflows. Upload CSV or XLSX files containing entities (companies, people) or monitoring targets. Files are processed and stored securely, then can be referenced when creating signal monitoring or ingest tasks. XLSX files are automatically converted to CSV format.
+   */
   files: API.Files = new API.Files(this);
 }
 
