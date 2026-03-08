@@ -291,6 +291,11 @@ export interface ProfilePromptConfigResponse {
  */
 export interface SearchTaskConfig {
   /**
+   * Known company name or URL for company lookup mode
+   */
+  company_input?: string | null;
+
+  /**
    * Number of contacts to find per company (minimum: 1)
    */
   desired_contact_count?: number;
@@ -332,6 +337,11 @@ export interface SearchTaskConfigResponse {
    * Feedback to refine search behavior
    */
   user_feedback: string;
+
+  /**
+   * Known company name or URL for company lookup mode
+   */
+  company_input?: string | null;
 
   type?: 'search';
 
