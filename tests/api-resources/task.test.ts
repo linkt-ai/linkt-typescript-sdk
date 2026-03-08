@@ -35,6 +35,7 @@ describe('resource task', () => {
       icp_id: '5eb7cf5a86d9755df3a6c593',
       prompt: 'prompt',
       task_config: {
+        company_input: 'company_input',
         desired_contact_count: 1,
         type: 'search',
         user_feedback: 'user_feedback',
