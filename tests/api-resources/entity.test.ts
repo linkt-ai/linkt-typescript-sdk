@@ -51,6 +51,7 @@ describe('resource entity', () => {
       client.entity.list(
         {
           entity_type: 'company',
+          fields: 'fields',
           hide_duplicates: true,
           icp_id: ['string'],
           page: 1,
