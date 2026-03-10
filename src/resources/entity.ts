@@ -481,6 +481,12 @@ export interface EntityListParams {
   entity_type?: SheetAPI.EntityType | null;
 
   /**
+   * Comma-separated list of data fields to include (e.g., 'name,company,title').
+   * Returns all fields if omitted.
+   */
+  fields?: string | null;
+
+  /**
    * Hide duplicate entities (show only primaries)
    */
   hide_duplicates?: boolean;
