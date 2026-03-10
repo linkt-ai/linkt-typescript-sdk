@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.8.0 (2026-03-10)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** api update ([b7af358](https://github.com/linkt-ai/linkt-typescript-sdk/commit/b7af358740d44f53f13a709321179824dc6aaa0b))
+* **api:** api update ([173eb3e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/173eb3eeb999e06577d36a85b8c697851a80f05e))
+
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([054948e](https://github.com/linkt-ai/linkt-typescript-sdk/commit/054948e4fb59f9b91cc3c17773932c45e26b63d5))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([4fed81a](https://github.com/linkt-ai/linkt-typescript-sdk/commit/4fed81aa3f88e9a0e098b6f2672730fa4074f5f2))
+* **internal:** codegen related update ([594aee0](https://github.com/linkt-ai/linkt-typescript-sdk/commit/594aee097b77b3ab90a52a0cecb089ace700ae1f))
+* **internal:** update dependencies to address dependabot vulnerabilities ([a4a9de9](https://github.com/linkt-ai/linkt-typescript-sdk/commit/a4a9de9610b40c8d616d0ab5a73d0b38e7377afe))
+
 ## 0.7.0 (2026-03-05)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.6.0...v0.7.0)
