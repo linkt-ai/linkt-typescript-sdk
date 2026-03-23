@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1 (2026-03-17)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.8.0...v0.8.1)
+
+### Chores
+
+* **internal:** tweak CI branches ([fbc292f](https://github.com/linkt-ai/linkt-typescript-sdk/commit/fbc292fa6b627543cb4d525e46bdf5bda7b3823a))
+
 ## 0.8.0 (2026-03-10)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.7.0...v0.8.0)
