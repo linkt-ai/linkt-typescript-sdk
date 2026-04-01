@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.2 (2026-04-01)
+
+Full Changelog: [v0.8.1...v0.8.2](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.8.1...v0.8.2)
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([0460b20](https://github.com/linkt-ai/linkt-typescript-sdk/commit/0460b2032f9c8e29b828c494abf1b0d8cd0d7bbd))
+* **internal:** update gitignore ([add3880](https://github.com/linkt-ai/linkt-typescript-sdk/commit/add388076846697c2eaed37a6c1c3b9bc8991645))
+
 ## 0.8.1 (2026-03-17)
 
 Full Changelog: [v0.8.0...v0.8.1](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.8.0...v0.8.1)
