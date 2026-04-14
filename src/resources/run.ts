@@ -153,7 +153,9 @@ export interface RunListResponse {
  * request) stats: Queue statistics or state counts total: Total number of entities
  * returned offset: Offset used for pagination (0-indexed) limit: Maximum number of
  * entities returned state_counts: Optional breakdown of entities by state
- * include_history: Whether response includes historical data
+ * include_history: Whether response includes historical data queue_data_available:
+ * Whether queue data is still available in Redis queue_data_message: Optional
+ * message about queue data availability
  */
 export interface RunGetQueueResponse {
   entities: Array<{ [key: string]: unknown }>;
@@ -167,6 +169,10 @@ export interface RunGetQueueResponse {
   total: number;
 
   include_history?: boolean;
+
+  queue_data_available?: boolean;
+
+  queue_data_message?: string | null;
 
   state_counts?: { [key: string]: number } | null;
 }
