@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.9.0 (2026-04-14)
+
+Full Changelog: [v0.8.2...v0.9.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.8.2...v0.9.0)
+
+### Features
+
+* **api:** api update ([a6e965a](https://github.com/linkt-ai/linkt-typescript-sdk/commit/a6e965a8c5a5695750bf707f87de228cd11d22bd))
+
+
+### Chores
+
+* **internal:** codegen related update ([7e27748](https://github.com/linkt-ai/linkt-typescript-sdk/commit/7e2774830cfe7176de1b150c2952a0036e6e232f))
+
 ## 0.8.2 (2026-04-01)
 
 Full Changelog: [v0.8.1...v0.8.2](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.8.1...v0.8.2)
