@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.10.0 (2026-04-30)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* support setting headers via env ([b237576](https://github.com/linkt-ai/linkt-typescript-sdk/commit/b2375760531e4b160538201703c448f5409b66d4))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([2105af3](https://github.com/linkt-ai/linkt-typescript-sdk/commit/2105af38f0167f6bc00e1cbddf18fe13d73f83e2))
+* **internal:** codegen related update ([dbbe300](https://github.com/linkt-ai/linkt-typescript-sdk/commit/dbbe300b8ffb287cdc26f640b5b043156eaeb3ec))
+* **internal:** more robust bootstrap script ([a8577c1](https://github.com/linkt-ai/linkt-typescript-sdk/commit/a8577c1dc278f67822767e241ce4d940ab504ad9))
+
 ## 0.9.0 (2026-04-14)
 
 Full Changelog: [v0.8.2...v0.9.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.8.2...v0.9.0)
