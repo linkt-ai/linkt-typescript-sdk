@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.10.1 (2026-05-19)
+
+Full Changelog: [v0.10.0...v0.10.1](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.10.0...v0.10.1)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([8ffd03d](https://github.com/linkt-ai/linkt-typescript-sdk/commit/8ffd03d4ae604942530ec6378cd181a8ff8f122e))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([5476b7b](https://github.com/linkt-ai/linkt-typescript-sdk/commit/5476b7b4dd2a1856cc495c6348464c6984531748))
+* **tests:** remove redundant File import ([6d6729d](https://github.com/linkt-ai/linkt-typescript-sdk/commit/6d6729db0a68b538177c4abeeaf66e74c613d28e))
+
 ## 0.10.0 (2026-04-30)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.9.0...v0.10.0)
