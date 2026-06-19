@@ -40,6 +40,8 @@ describe('resource signal', () => {
         {
           days: 1,
           entity_id: 'entity_id',
+          external_id: 'external_id',
+          external_source: 'external_source',
           icp_id: 'icp_id',
           order: 0,
           page: 1,

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.11.0 (2026-06-19)
+
+Full Changelog: [v0.10.1...v0.11.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.10.1...v0.11.0)
+
+### Features
+
+* **api:** api update ([e560e49](https://github.com/linkt-ai/linkt-typescript-sdk/commit/e560e4967a7c69a81ca6ad53fbda8088b7d22211))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([cfac6df](https://github.com/linkt-ai/linkt-typescript-sdk/commit/cfac6df06bd9cf7596f52261352f4766fa9fc57f))
+
 ## 0.10.1 (2026-05-19)
 
 Full Changelog: [v0.10.0...v0.10.1](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.10.0...v0.10.1)
