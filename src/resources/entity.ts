@@ -481,6 +481,17 @@ export interface EntityListParams {
   entity_type?: SheetAPI.EntityType | null;
 
   /**
+   * Filter by an external record identifier (e.g. a Salesforce Account Id). Resolves
+   * to the org's entities carrying this external_id across all ICPs.
+   */
+  external_id?: string | null;
+
+  /**
+   * External system that owns external_id (default: 'salesforce').
+   */
+  external_source?: string;
+
+  /**
    * Comma-separated list of data fields to include (e.g., 'name,company,title').
    * Returns all fields if omitted.
    */

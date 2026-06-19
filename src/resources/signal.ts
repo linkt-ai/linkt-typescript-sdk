@@ -52,6 +52,10 @@ export interface SignalResponse {
   strength: string | null;
 
   summary: string;
+
+  metadata?: { [key: string]: unknown } | null;
+
+  signal_display_name?: string | null;
 }
 
 /**
@@ -77,6 +81,18 @@ export interface SignalListParams {
    * Filter by entity
    */
   entity_id?: string | null;
+
+  /**
+   * Filter by an external record identifier (e.g. a Salesforce Account Id). Resolves
+   * to the org's entities carrying this external_id across all ICPs and returns the
+   * union of their signals.
+   */
+  external_id?: string | null;
+
+  /**
+   * External system that owns external_id (default: 'salesforce').
+   */
+  external_source?: string;
 
   /**
    * Filter by ICP
