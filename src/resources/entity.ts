@@ -265,6 +265,16 @@ export interface EntityResponse {
   duplicate_info?: EntityResponse.DuplicateInfo | null;
 
   /**
+   * External system identifier (e.g. a Salesforce Account Id)
+   */
+  external_id?: string | null;
+
+  /**
+   * External system that owns external_id (e.g. 'salesforce')
+   */
+  external_source?: string | null;
+
+  /**
    * Parent entity ID (for hierarchical entities)
    */
   parent_id?: string | null;
