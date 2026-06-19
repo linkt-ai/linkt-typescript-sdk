@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 (2026-06-19)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* **api:** api update ([e12e86f](https://github.com/linkt-ai/linkt-typescript-sdk/commit/e12e86fd839ebda794bb57c4741340f5bb5c7d7f))
+
 ## 0.11.0 (2026-06-19)
 
 Full Changelog: [v0.10.1...v0.11.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.10.1...v0.11.0)
