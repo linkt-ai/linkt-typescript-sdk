@@ -2,7 +2,11 @@
 
 set -eux
 
-npm config set '//registry.npmjs.org/:_authToken' "$NPM_TOKEN"
+# Token auth is optional. When NPM_TOKEN is unset (the default), publishing
+# falls through to npm OIDC trusted publishing, which requires no token.
+if [ -n "${NPM_TOKEN:-}" ]; then
+  npm config set '//registry.npmjs.org/:_authToken' "$NPM_TOKEN"
+fi
 
 pnpm build
 cd dist
