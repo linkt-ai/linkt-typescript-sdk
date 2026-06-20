@@ -19,10 +19,16 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
+      # Node >= 22.14 + npm >= 11.5.1 are required for npm OIDC trusted
+      # publishing. registry-url wires up the npmjs registry in .npmrc.
       - name: Set up Node
         uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
         with:
-          node-version: '20'
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest
 
       - name: Set up pnpm
         uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
@@ -31,8 +37,8 @@ jobs:
         run: |
           pnpm install
 
-      # Publishes via npm OIDC trusted publishing (no token).
-      # The `id-token: write` permission above lets pnpm exchange the
+      # Publishes via npm OIDC trusted publishing (no token). The
+      # `id-token: write` permission above lets the npm CLI exchange the
       # GitHub OIDC token with the registry's configured trusted publisher.
       - name: Publish to NPM
         run: |

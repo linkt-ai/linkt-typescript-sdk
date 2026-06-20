@@ -61,5 +61,8 @@ else
   TAG="latest"
 fi
 
-# Publish with the appropriate tag
-pnpm publish --no-git-checks --tag "$TAG"
+# Publish with the appropriate tag.
+# Use the npm CLI (>= 11.5.1) so OIDC trusted publishing engages; npm
+# auto-generates provenance and obtains short-lived credentials via the
+# GitHub OIDC token. pnpm is still used for install/build above.
+npm publish --provenance --access public --tag "$TAG"
