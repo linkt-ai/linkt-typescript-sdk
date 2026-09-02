@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.1 (2026-09-02)
+
+Full Changelog: [v0.12.0...v0.12.1](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.12.0...v0.12.1)
+
+### Documentation
+
+* add AGENTS.md, the agent instruction contract ([52095ba](https://github.com/linkt-ai/linkt-typescript-sdk/commit/52095ba3a97085ad907b46c81bd5e4518d72b1f6))
+
 ## 0.12.0 (2026-06-19)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/linkt-ai/linkt-typescript-sdk/compare/v0.11.0...v0.12.0)
