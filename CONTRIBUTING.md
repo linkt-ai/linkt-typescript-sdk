@@ -1,101 +1,25 @@
-## Setting up the environment
+# Contributing to the frozen SDK
 
-This repository uses [`pnpm`](https://pnpm.io/).
-Other package managers may work but are not officially supported for development.
+This repository preserves the legacy V1 client. New integrations use direct HTTP or MCP.
+See [migration guidance](MIGRATION.md). No new SDK generation or publication is planned.
 
-To set up the repository, run:
+Keep existing package versions and generated source accessible. Repository maintenance can
+update tests, migration documentation and publication guards. Do not restore publishing
+workflows or bypass the shutdown scripts. External credentials and vendor access require the
+coordinated activation review described in the migration guidance.
 
-```sh
-$ pnpm install
-$ pnpm build
-```
-
-This will install all the required dependencies and build output files to `dist/`.
-
-## Modifying/Adding code
-
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may
-result in merge conflicts between manual patches and changes from the generator. The generator will never
-modify the contents of the `src/lib/` and `examples/` directories.
-
-## Adding and running examples
-
-All files in the `examples/` directory are not modified by the generator and can be freely edited or added to.
-
-```ts
-// add an example to examples/<your-example>.ts
-
-#!/usr/bin/env -S npm run tsn -T
-…
-```
+Run the existing verification commands when maintaining the retained source:
 
 ```sh
-$ chmod +x examples/<your-example>.ts
-# run the example against your api
-$ pnpm tsn -T examples/<your-example>.ts
+pnpm install --frozen-lockfile
+pnpm test
 ```
 
-## Using the repository from source
-
-If you’d like to use the repository from source, you can either install from git or link to a cloned repository:
-
-To install via git:
+Run the publication guard checks without registry credentials:
 
 ```sh
-$ npm install git+ssh://git@github.com:linkt-ai/linkt-typescript-sdk.git
+python3 .github/scripts/test-sdk-freeze.py
 ```
 
-Alternatively, to link a local copy of the repo:
-
-```sh
-# Clone
-$ git clone https://www.github.com/linkt-ai/linkt-typescript-sdk
-$ cd linkt-typescript-sdk
-
-# With yarn
-$ yarn link
-$ cd ../my-package
-$ yarn link @linkt/sdk
-
-# With pnpm
-$ pnpm link --global
-$ cd ../my-package
-$ pnpm link --global @linkt/sdk
-```
-
-## Running tests
-
-```sh
-$ pnpm run test
-```
-
-## Linting and formatting
-
-This repository uses [prettier](https://www.npmjs.com/package/prettier) and
-[eslint](https://www.npmjs.com/package/eslint) to format the code in the repository.
-
-To lint:
-
-```sh
-$ pnpm lint
-```
-
-To format and fix all lint issues automatically:
-
-```sh
-$ pnpm fix
-```
-
-## Publishing and releases
-
-Changes made to this repository via the automated release PR pipeline should publish to npm automatically. If
-the changes aren't made through the automated pipeline, you may want to make releases manually.
-
-### Publish with a GitHub workflow
-
-You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/linkt-ai/linkt-typescript-sdk/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
-
-### Publish manually
-
-If you need to manually release a package, you can run the `bin/publish-npm` script with an `NPM_TOKEN` set on
-the environment.
+Report legacy client issues through this repository. Use the V2 HTTP/MCP contract and cookbook
+for new operations. An issue report does not imply a new SDK release.
