@@ -1,12 +1,19 @@
 # Linkt TypeScript API Library
 
+> **Deprecated legacy V1 SDK.** This TypeScript SDK is frozen. New integrations use direct
+> HTTP or MCP. Existing package versions and this repository remain available.
+> Legacy `/v1` and `/mcp` remain available with their existing authentication.
+> No endpoint retirement date is set. See [migration guidance](MIGRATION.md).
+
+## Legacy V1 reference
+
 [![NPM version](<https://img.shields.io/npm/v/@linkt/sdk.svg?label=npm%20(stable)>)](https://npmjs.org/package/@linkt/sdk) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@linkt/sdk)
 
 This library provides convenient access to the Linkt REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [linkt.ai](https://linkt.ai/support). The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainless.com/).
+The legacy client was generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
@@ -186,7 +193,7 @@ console.log(icpResponse.id);
 
 > [!IMPORTANT]
 > All log messages are intended for debugging only. The format and content of log messages
-> may change between releases.
+> describe the installed legacy version.
 
 #### Log levels
 
@@ -359,17 +366,10 @@ const client = new Linkt({
 
 ## Frequently Asked Questions
 
-## Semantic versioning
+## Frozen versions
 
-This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
-
-1. Changes that only affect static types, without breaking runtime behavior.
-2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_
-3. Changes that we do not expect to impact the vast majority of users in practice.
-
-We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
-
-We are keen for your feedback; please open an [issue](https://www.github.com/linkt-ai/linkt-typescript-sdk/issues) with questions, bugs, or suggestions.
+Existing published versions remain available. This repository does not plan new SDK releases.
+Use the HTTP and MCP interfaces for new integrations and V2 features.
 
 ## Requirements
 

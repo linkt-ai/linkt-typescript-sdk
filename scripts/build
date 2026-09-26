@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 
 node scripts/utils/check-version.cjs
 
-# Build into dist and will publish the package from there,
+# Build the retained legacy package into dist,
 # so that src/resources/foo.ts becomes <package root>/resources/foo.js
 # This way importing from `"@linkt/sdk/resources/foo"` works
 # even with `"moduleResolution": "node"`
@@ -14,7 +14,7 @@ node scripts/utils/check-version.cjs
 rm -rf dist; mkdir dist
 # Copy src to dist/src and build from dist/src into dist, so that
 # the source map for index.js.map will refer to ./src/index.ts etc
-cp -rp src README.md dist
+cp -rp src README.md MIGRATION.md dist
 for file in LICENSE CHANGELOG.md; do
   if [ -e "${file}" ]; then cp "${file}" dist; fi
 done
